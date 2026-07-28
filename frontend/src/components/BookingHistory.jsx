@@ -1,3 +1,5 @@
+import "./BookingHistory.css";
+
 export default function BookingHistory({ history, onDelete }) {
   if (history.length === 0) {
     return (
@@ -31,6 +33,7 @@ export default function BookingHistory({ history, onDelete }) {
                   }
                 }}
                 title="Remove booking"
+                aria-label={`Delete booking ${b.reference}`}
               >
                 &#10005;
               </button>

@@ -1,0 +1,131 @@
+.bus {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.bus-front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.wheel-icon {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-radius: 50%;
+  position: relative;
+}
+
+.wheel-icon::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+}
+
+.seat-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.aisle-gap {
+  width: 20px;
+}
+
+.seat-grid > * {
+  display: contents;
+}
+
+.seat {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.seat:hover:not(:disabled) {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.seat.selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.seat:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.seat-legend {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.dot.available {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.dot.selected-dot {
+  background: var(--accent);
+}
+
+.dot.booked {
+  background: var(--text-dim);
+  opacity: 0.4;
+}
+
+@media (max-width: 480px) {
+  .seat {
+    width: 40px;
+    height: 40px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  .aisle-gap {
+    width: 12px;
+  }
+}

@@ -1,3 +1,5 @@
+import "./SeatMap.css";
+
 export default function SeatMap({ totalSeats, bookedSeats, selectedSeats, onToggleSeat, coach }) {
   const rows = [];
   for (let i = 1; i <= totalSeats; i += 4) {

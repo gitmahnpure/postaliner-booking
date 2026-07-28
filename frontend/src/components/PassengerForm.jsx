@@ -1,3 +1,5 @@
+import "./PassengerForm.css";
+
 export default function PassengerForm({ customer, onChange }) {
   const update = (field) => (e) => onChange({ ...customer, [field]: e.target.value });
 

@@ -1,3 +1,5 @@
+import "./Confirmation.css";
+
 export default function Confirmation({ booking, onNewBooking, paymentMethod }) {
   const barcodeBars = Array.from(booking.reference).map((ch, i) => {
     const height = 12 + ((ch.charCodeAt(0) * (i + 3)) % 30);

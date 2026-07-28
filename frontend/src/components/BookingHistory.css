@@ -1,0 +1,143 @@
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.history-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.history-ref {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-right: 10px;
+}
+
+.history-route {
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+.history-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.history-status {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.1);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.history-delete {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-dim);
+  font-size: 16px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.history-delete:hover {
+  background: rgba(217, 4, 41, 0.1);
+  color: var(--accent);
+  border-color: rgba(217, 4, 41, 0.3);
+}
+
+.history-card-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  padding: 16px 20px;
+}
+
+.history-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.history-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+
+.history-value {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.history-fare {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.history-card-footer {
+  padding: 10px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 64px 20px;
+  color: var(--text-dim);
+}
+
+.empty-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.empty-state p {
+  font-size: 14px;
+}
+
+@media (max-width: 640px) {
+  .history-card-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .history-card-body {
+    grid-template-columns: 1fr;
+  }
+}
