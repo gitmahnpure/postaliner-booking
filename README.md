@@ -30,10 +30,10 @@ python3 -m venv .venv && source .venv/bin/activate   # optional but recommended
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py seed_data      # loads demo locations, routes, schedules
-python manage.py runserver 8000
+python manage.py runserver 8001
 ```
 
-API will be at `http://localhost:8000/api/`. Key endpoints:
+API will be at `http://localhost:8001/api/`. Key endpoints:
 
 | Method | Path                                  | Purpose                          |
 |--------|----------------------------------------|-----------------------------------|
@@ -59,7 +59,7 @@ npm run dev
 ```
 
 Opens at `http://localhost:5173`. It talks to the API at the URL in
-`frontend/.env` (`VITE_API_URL`, defaults to `http://localhost:8000/api`).
+`frontend/.env` (`VITE_API_URL`, defaults to `http://localhost:8001/api`).
 
 Run both the backend and frontend dev servers at the same time, then open
 the frontend URL in your browser.

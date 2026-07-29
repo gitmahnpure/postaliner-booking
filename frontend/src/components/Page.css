@@ -5,6 +5,10 @@
   animation: fadeUp 0.4s ease both;
 }
 
+.main {
+  padding-top: 88px;
+}
+
 .page-center {
   min-height: 60vh;
   display: flex;
