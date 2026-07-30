@@ -1,3 +1,5 @@
+from datetime import time
+
 from django.core.management.base import BaseCommand
 
 from booking.models import Location, Route, Schedule
@@ -19,17 +21,21 @@ ROUTES = [
     ("nairobi-busia", "city_square", "busia", "Nairobi - Busia"),
 ]
 
+def _t(hhmm):
+    h, m = hhmm.split(":")
+    return time(int(h), int(m))
+
 SCHEDULES = [
-    ("busia-nairobi", "07:00", "PCK 101", 1200),
-    ("busia-nairobi", "12:00", "PCK 104", 1200),
-    ("busia-nairobi", "18:30", "PCK 107", 1350),
-    ("busia-nairobi", "19:00", "PCK 102", 1350),
-    ("busia-nairobi", "20:00", "PCK 110", 1350),
-    ("nairobi-busia", "07:00", "PCK 201", 1200),
-    ("nairobi-busia", "13:00", "PCK 205", 1200),
-    ("nairobi-busia", "18:30", "PCK 208", 1350),
-    ("nairobi-busia", "19:00", "PCK 203", 1350),
-    ("nairobi-busia", "20:00", "PCK 211", 1350),
+    ("busia-nairobi", _t("07:00"), "PCK 101", 1200),
+    ("busia-nairobi", _t("12:00"), "PCK 104", 1200),
+    ("busia-nairobi", _t("18:30"), "PCK 107", 1350),
+    ("busia-nairobi", _t("19:00"), "PCK 102", 1350),
+    ("busia-nairobi", _t("20:00"), "PCK 110", 1350),
+    ("nairobi-busia", _t("07:00"), "PCK 201", 1200),
+    ("nairobi-busia", _t("13:00"), "PCK 205", 1200),
+    ("nairobi-busia", _t("18:30"), "PCK 208", 1350),
+    ("nairobi-busia", _t("19:00"), "PCK 203", 1350),
+    ("nairobi-busia", _t("20:00"), "PCK 211", 1350),
 ]
 
 

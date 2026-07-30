@@ -48,10 +48,10 @@ export const api = {
     request("/auth/register/", { method: "POST", body: JSON.stringify(payload) }),
   getMe: (token) => request("/auth/me/", withAuth(token)),
 
-  createHold: (scheduleId, date, seats, token) =>
-    request("/holds/", { method: "POST", body: JSON.stringify({ schedule: scheduleId, travel_date: date, seats }), ...withAuth(token) }),
-  releaseHold: (holdId, token) =>
-    request(`/holds/${holdId}/`, { method: "DELETE", ...withAuth(token) }),
+  createHold: (scheduleId, date, seats) =>
+    request("/holds/", { method: "POST", body: JSON.stringify({ scheduleId, travelDate: date, seats }) }),
+  releaseHold: (holdId) =>
+    request(`/holds/${holdId}/`, { method: "DELETE" }),
 
   getMyBookings: (token) => request("/bookings/my/", withAuth(token)),
 };

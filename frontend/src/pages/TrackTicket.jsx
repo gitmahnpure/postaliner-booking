@@ -56,7 +56,11 @@ function TrackTicket() {
 
       {error && (
         <div className="error-banner" role="alert">
-          <strong>Not found</strong>
+          <strong>{
+            error.includes("404") || error.includes("Not found") ? "Not found" :
+            error.includes("Network") ? "Network error" :
+            "Could not find booking"
+          }</strong>
           <p>{error}</p>
         </div>
       )}
@@ -76,19 +80,19 @@ function TrackTicket() {
             <div className="summary-grid">
               <div>
                 <div className="k">Route</div>
-                <div className="v">{booking.route || `${booking.from_location || "—"} → ${booking.to_location || "—"}`}</div>
+                <div className="v">{booking.schedule?.routeId || booking.schedule?.label || `${booking.from_location || "—"} → ${booking.to_location || "—"}`}</div>
               </div>
               <div>
                 <div className="k">Travel date</div>
-                <div className="v">{booking.travel_date}</div>
+                <div className="v">{booking.travelDate || booking.travel_date}</div>
               </div>
               <div>
                 <div className="k">Departure</div>
-                <div className="v">{booking.departure_time || booking.schedule?.departureTime || "—"}</div>
+                <div className="v">{booking.schedule?.departureTime || "—"}</div>
               </div>
               <div>
                 <div className="k">Coach</div>
-                <div className="v">{booking.coach || booking.schedule?.coach || "—"}</div>
+                <div className="v">{booking.schedule?.coach || "—"}</div>
               </div>
               <div>
                 <div className="k">Seats</div>
@@ -96,7 +100,7 @@ function TrackTicket() {
               </div>
               <div>
                 <div className="k">Passenger</div>
-                <div className="v">{booking.customer_name || booking.passenger_name || "—"}</div>
+                <div className="v">{booking.customerName || booking.customer_name || "—"}</div>
               </div>
               <div>
                 <div className="k">Status</div>
@@ -104,7 +108,7 @@ function TrackTicket() {
               </div>
               <div>
                 <div className="k">Total paid</div>
-                <div className="v summary-total">KES {(booking.total_fare || 0).toLocaleString()}</div>
+                <div className="v summary-total">KES {(booking.totalFare || booking.total_fare || 0).toLocaleString()}</div>
               </div>
             </div>
           </div>

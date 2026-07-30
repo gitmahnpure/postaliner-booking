@@ -19,7 +19,7 @@ export default function BookingHistory({ history, onDelete }) {
             <div>
               <span className="history-ref">{b.reference}</span>
               <span className="history-route">
-                {b.schedule?.routeId?.replace("-", " → ") || "—"}
+                {(b.schedule?.routeId || "").replace(/-/g, " → ") || "—"}
               </span>
             </div>
             <div className="history-card-actions">

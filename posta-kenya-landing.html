@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Posta Kenya — Travel Across Kenya</title>
+<title>Posta Kenya — Travel Across Kenya in Executive Luxury</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -14,19 +14,19 @@
     --navy:#14274D;
     --navy-2:#1B355E;
     --blue:#3D6FE0;
-    --bg:#F7F8FB;
-    --ink:#16213A;
-    --slate:#6B7385;
-    --slate-light:#9AA1B2;
-    --red-tint:#FCEBEA;
-    --blue-tint:#EAF0FC;
-    --line:#E7E9F0;
+    --bg:#0B1220;
+    --ink:#F1F5F9;
+    --slate:#94A3B8;
+    --slate-light:#CBD5E1;
+    --red-tint:rgba(211,47,47,0.18);
+    --blue-tint:rgba(61,111,224,0.18);
+    --line:rgba(255,255,255,0.12);
     --white:#ffffff;
     --gold:#F2A93B;
-    --shadow-sm: 0 2px 10px rgba(20,39,77,.06);
-    --shadow-md: 0 12px 32px rgba(20,39,77,.10);
-    --shadow-lg: 0 24px 60px rgba(20,39,77,.16);
-    --radius: 16px;
+    --shadow-sm: 0 2px 10px rgba(0,0,0,.25);
+    --shadow-md: 0 12px 32px rgba(0,0,0,.40);
+    --shadow-lg: 0 24px 60px rgba(0,0,0,.60);
+    --radius: 20px;
     --ease: cubic-bezier(.22,.68,.36,1);
   }
 
@@ -48,660 +48,584 @@
   .mono{ font-family:'JetBrains Mono',monospace; }
 
   .container{ max-width:1240px; margin:0 auto; padding:0 32px; }
-  section{ position:relative; }
 
-  ::selection{ background:var(--red); color:#fff; }
+  /* ---------- CONTINUOUS CANVAS SCROLL ENGINE ---------- */
+  #scrollCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    background: #090D16;
+  }
 
-  /* ---------- NAVBAR ---------- */
+  .canvas-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(ellipse 100% 100% at 50% 30%, rgba(15,23,42,0.35) 0%, rgba(9,13,22,0.82) 100%);
+  }
+
+  .scroll-track {
+    position: relative;
+    height: 380vh;
+    z-index: 10;
+  }
+
+  .scroll-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 70px 24px 24px;
+  }
+
+  /* ---------- GLASS NAVBAR ---------- */
   header{
-    position:sticky; top:0; z-index:200;
-    background:rgba(255,255,255,.88);
-    backdrop-filter:blur(14px);
-    border-bottom:1px solid transparent;
-    transition:box-shadow .35s var(--ease), border-color .35s var(--ease), padding .35s var(--ease);
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(15, 23, 42, 0.65);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    transition:all .35s var(--ease);
   }
-  header.scrolled{ box-shadow:var(--shadow-sm); border-color:var(--line); }
+  header.scrolled{
+    background:rgba(11, 18, 32, 0.92);
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    border-bottom-color:rgba(255,255,255,0.15);
+  }
   .nav-inner{
-    max-width:1240px; margin:0 auto; padding:18px 32px;
+    max-width:1240px; margin:0 auto; padding:16px 32px;
     display:flex; align-items:center; justify-content:space-between; gap:24px;
-    transition:padding .35s var(--ease);
   }
-  header.scrolled .nav-inner{ padding:12px 32px; }
 
   .logo{ display:flex; align-items:center; gap:10px; }
   .logo-badge{
-    width:46px; height:46px; border-radius:10px;
+    width:44px; height:44px; border-radius:12px;
     background:linear-gradient(160deg, var(--red) 55%, var(--navy) 55%);
     display:flex; align-items:center; justify-content:center;
     position:relative; overflow:hidden; flex-shrink:0;
-    box-shadow: inset 0 0 0 2px rgba(255,255,255,.15);
+    box-shadow: 0 0 16px rgba(211,47,47,0.4);
   }
   .logo-badge svg{ width:24px; height:24px; }
   .logo-text{ display:flex; flex-direction:column; line-height:1; }
-  .logo-text .brand{ font-family:'Poppins'; font-weight:800; font-size:20px; letter-spacing:.5px; color:var(--red); }
-  .logo-text .brand span{ color:var(--navy); }
-  .logo-text .tagline{ font-family:'Poppins'; font-style:italic; font-weight:500; font-size:10.5px; color:var(--blue); letter-spacing:.3px; margin-top:1px; }
+  .logo-text .brand{ font-family:'Poppins'; font-weight:800; font-size:20px; letter-spacing:.5px; color:#fff; }
+  .logo-text .brand span{ color:var(--red); }
+  .logo-text .tagline{ font-family:'Poppins'; font-style:italic; font-weight:500; font-size:10.5px; color:var(--gold); letter-spacing:.3px; margin-top:2px; }
 
   nav.links{ display:flex; align-items:center; gap:36px; }
   nav.links a{
-    font-size:14.5px; font-weight:600; color:var(--ink); position:relative;
+    font-size:14.5px; font-weight:600; color:var(--slate-light); position:relative;
     padding:6px 0; transition:color .2s;
-    display:flex; align-items:center; gap:4px;
   }
-  nav.links a:hover{ color:var(--red); }
-  nav.links a.active{ color:var(--red); }
+  nav.links a:hover, nav.links a.active{ color:#fff; }
   nav.links a.active::after{
     content:""; position:absolute; left:0; right:0; bottom:-4px; height:2.5px;
     background:var(--red); border-radius:2px;
+    box-shadow: 0 0 10px var(--red);
   }
-  nav.links a svg{ width:12px; height:12px; opacity:.7; }
 
   .nav-actions{ display:flex; align-items:center; gap:12px; flex-shrink:0; }
   .btn{
-    font-size:14px; font-weight:600; padding:10px 20px; border-radius:10px;
+    font-size:14px; font-weight:600; padding:10px 20px; border-radius:12px;
     border:1.5px solid transparent; display:inline-flex; align-items:center; gap:8px;
-    transition:transform .18s var(--ease), box-shadow .18s var(--ease), background .18s, border-color .18s;
+    transition:all .2s var(--ease);
   }
-  .btn:active{ transform:scale(.96); }
-  .btn-ghost{ color:var(--blue); border-color:var(--blue); background:#fff; }
-  .btn-ghost:hover{ background:var(--blue-tint); }
-  .btn-solid{ color:#fff; background:var(--red); box-shadow:0 6px 16px rgba(211,47,47,.28); }
-  .btn-solid:hover{ background:var(--red-dark); transform:translateY(-1px); box-shadow:0 10px 22px rgba(211,47,47,.35); }
-  .btn svg{ width:15px; height:15px; }
+  .btn-ghost{ color:#fff; border-color:rgba(255,255,255,0.25); background:rgba(255,255,255,0.06); }
+  .btn-ghost:hover{ background:rgba(255,255,255,0.15); border-color:#fff; }
+  .btn-solid{ color:#fff; background:var(--red); box-shadow:0 6px 20px rgba(211,47,47,.4); }
+  .btn-solid:hover{ background:var(--red-dark); transform:translateY(-1px); box-shadow:0 10px 26px rgba(211,47,47,.55); }
 
-  /* ---------- HERO ---------- */
-  .hero{
-    position:relative;
-    background:radial-gradient(ellipse 120% 90% at 30% -10%, #1c3766 0%, var(--navy) 55%, #0d1b38 100%);
-    padding:76px 0 190px;
-    overflow:hidden;
-    isolation:isolate;
+  /* ---------- SECTION STAGES (OVERLAYS) ---------- */
+  .overlay-stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 85px 32px 30px;
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+    transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+    pointer-events: none;
+    width: 100%;
   }
-  .hero-noise{
-    position:absolute; inset:0; opacity:.05; pointer-events:none;
-    background-image: radial-gradient(circle, #fff 1px, transparent 1px);
-    background-size: 22px 22px;
-  }
-  .mountain-layer{ position:absolute; left:0; right:0; bottom:0; width:100%; }
-  .mountain-layer svg{ width:100%; display:block; }
 
-  .hero-grid{
-    position:relative; z-index:3;
-    display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center;
+  .overlay-stage.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  /* GLASS PANEL SYSTEM */
+  .glass-panel {
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(24px) saturate(190%);
+    -webkit-backdrop-filter: blur(24px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    padding: 32px;
+    color: #ffffff;
   }
 
   .eyebrow{
     display:inline-flex; align-items:center; gap:8px;
-    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16);
-    padding:7px 14px 7px 10px; border-radius:100px; font-size:12.5px; font-weight:600;
-    color:#DCE4F7; letter-spacing:.3px; margin-bottom:22px;
-    opacity:0; transform:translateY(14px);
+    background:rgba(211,47,47,0.18); border:1px solid rgba(211,47,47,0.4);
+    padding:6px 14px 6px 10px; border-radius:100px; font-size:12.5px; font-weight:600;
+    color:#FF8A8A; letter-spacing:.4px; margin-bottom:18px;
   }
   .eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--gold); animation:pulse 2s infinite; }
-  @keyframes pulse{ 0%,100%{ opacity:1; transform:scale(1);} 50%{ opacity:.5; transform:scale(1.4);} }
+  @keyframes pulse{ 0%,100%{ opacity:1; transform:scale(1);} 50%{ opacity:.4; transform:scale(1.5);} }
 
-  .hero h1{
-    font-size:clamp(34px,4.6vw,53px); font-weight:800; color:#fff; letter-spacing:-.5px;
-    opacity:0; transform:translateY(18px);
+  /* SEARCH CARD */
+  .hero-title-box{ text-align:center; max-width:760px; margin-bottom:30px; }
+  .hero-title-box h1{
+    font-size:clamp(32px, 4.5vw, 54px); font-weight:800; color:#fff; letter-spacing:-.8px; text-shadow:0 4px 20px rgba(0,0,0,0.6);
   }
-  .hero h1 .accent{ color:var(--red); position:relative; white-space:nowrap; }
+  .hero-title-box h1 .accent{ color:var(--red); }
+  .hero-title-box p{
+    margin-top:12px; font-size:16.5px; color:var(--slate-light); font-weight:400; line-height:1.6;
+  }
 
-  .hero p.lead{
-    margin-top:22px; font-size:17px; line-height:1.65; color:#B9C4DE; max-width:460px;
-    opacity:0; transform:translateY(18px);
-  }
-
-  .trust-row{ display:flex; gap:26px; margin-top:30px; flex-wrap:wrap; opacity:0; transform:translateY(18px); }
-  .trust-item{ display:flex; align-items:center; gap:9px; font-size:13.5px; font-weight:600; color:#DCE4F7; }
-  .trust-item .ic{
-    width:30px; height:30px; border-radius:9px; background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.14);
-    display:flex; align-items:center; justify-content:center; flex-shrink:0;
-  }
-  .trust-item svg{ width:15px; height:15px; color:var(--gold); }
-
-  /* route visual */
-  .route-visual{ position:relative; height:380px; opacity:0; transform:translateY(20px) scale(.97); }
-  .route-visual svg{ width:100%; height:100%; overflow:visible; }
-  .route-path{
-    fill:none; stroke:url(#routeGrad); stroke-width:3; stroke-linecap:round;
-    stroke-dasharray:6 10;
-    stroke-dashoffset:0;
-    animation: dash 22s linear infinite;
-  }
-  @keyframes dash{ to{ stroke-dashoffset:-500; } }
-  .route-glow{
-    fill:none; stroke:var(--blue); stroke-width:14; stroke-linecap:round; opacity:.08; filter:blur(2px);
-  }
-  .city-pin{ }
-  .city-pin circle.ring{ fill:none; stroke:var(--red); stroke-width:2; opacity:.35; animation:ringpulse 2.6s ease-out infinite; transform-origin:center; }
-  .city-pin circle.ring.delay{ animation-delay:1.3s; }
-  @keyframes ringpulse{ 0%{ r:9; opacity:.5; } 100%{ r:28; opacity:0; } }
-  .city-pin .dot{ fill:#fff; stroke:var(--red); stroke-width:3; }
-  .city-pin.end .dot{ fill:var(--red); stroke:#fff; }
-  .city-label{ font-family:'Poppins'; font-weight:600; font-size:13px; fill:#fff; }
-  .city-sub{ font-family:'JetBrains Mono'; font-size:10px; fill:#9AABD1; letter-spacing:.5px; }
-  .bus-marker{ offset-rotate:0deg; }
-  .bus-marker-wrap{
-    animation: travel 5.5s var(--ease) infinite;
-  }
-  @keyframes travel{
-    0%{ offset-distance:0%; }
-    70%{ offset-distance:100%; }
-    100%{ offset-distance:100%; }
-  }
-  .bus-marker-svg{ width:34px; height:34px; }
-
-  /* search card */
   .search-card{
-    position:relative; z-index:10; margin-top:-108px;
-    background:#fff; border-radius:20px; box-shadow:var(--shadow-lg);
-    padding:28px 30px 24px; display:grid;
-    grid-template-columns:1fr auto 1fr 1fr 1fr auto; gap:16px; align-items:end;
-    opacity:0; transform:translateY(24px);
+    width:100%; max-width:1100px;
+    display:grid; grid-template-columns:1fr auto 1fr 1.1fr 1fr auto; gap:16px; align-items:end;
   }
-  .field{ display:flex; flex-direction:column; gap:9px; min-width:0; }
-  .field label{ font-size:12.5px; font-weight:700; color:var(--slate); text-transform:uppercase; letter-spacing:.4px; }
+  .field{ display:flex; flex-direction:column; gap:8px; min-width:0; }
+  .field label{ font-size:11.5px; font-weight:700; color:var(--slate-light); text-transform:uppercase; letter-spacing:.6px; }
   .field .input-wrap{
-    display:flex; align-items:center; gap:10px; border:1.5px solid var(--line); border-radius:11px;
-    padding:12px 13px; transition:border-color .2s, box-shadow .2s; background:#fff;
+    display:flex; align-items:center; gap:10px; border:1px solid rgba(255,255,255,0.18); border-radius:12px;
+    padding:12px 14px; background:rgba(0,0,0,0.35); transition:border-color .2s, box-shadow .2s;
   }
-  .field .input-wrap:focus-within{ border-color:var(--blue); box-shadow:0 0 0 4px var(--blue-tint); }
-  .field .input-wrap svg{ width:17px; height:17px; color:var(--red); flex-shrink:0; }
+  .field .input-wrap:focus-within{ border-color:var(--red); box-shadow:0 0 0 3px rgba(211,47,47,0.3); }
+  .field .input-wrap svg{ width:18px; height:18px; color:var(--red); flex-shrink:0; }
   .field input, .field select{
-    border:none; outline:none; font-size:14.5px; font-weight:600; color:var(--ink); width:100%;
+    border:none; outline:none; font-size:14.5px; font-weight:600; color:#fff; width:100%;
     font-family:inherit; background:transparent;
   }
-  .field input::placeholder{ color:var(--slate-light); font-weight:500; }
+  .field select option { background: #0F172A; color: #fff; }
   .swap-btn{
-    width:38px; height:38px; border-radius:50%; border:1.5px solid var(--line); background:#fff;
+    width:42px; height:42px; border-radius:50%; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.1);
     display:flex; align-items:center; justify-content:center; align-self:center; margin-bottom:2px;
-    transition:transform .3s var(--ease), border-color .2s, background .2s; flex-shrink:0;
+    transition:all .25s var(--ease); flex-shrink:0; cursor:pointer;
   }
-  .swap-btn:hover{ border-color:var(--red); background:var(--red-tint); }
-  .swap-btn.spin{ transform:rotate(180deg); }
-  .swap-btn svg{ width:16px; height:16px; color:var(--red); }
+  .swap-btn:hover{ border-color:var(--red); background:var(--red); transform:rotate(180deg); }
+  .swap-btn svg{ width:16px; height:16px; color:#fff; }
+
   .search-btn{
-    background:var(--red); color:#fff; border:none; border-radius:11px; padding:13px 24px;
-    font-size:14.5px; font-weight:700; display:flex; align-items:center; gap:9px; white-space:nowrap;
-    box-shadow:0 8px 20px rgba(211,47,47,.3); transition:transform .18s var(--ease), box-shadow .18s;
+    background:linear-gradient(135deg, var(--red) 0%, #B71C1C 100%); color:#fff; border:none; border-radius:12px; padding:14px 26px;
+    font-size:15px; font-weight:700; display:flex; align-items:center; gap:10px; white-space:nowrap;
+    box-shadow:0 8px 24px rgba(211,47,47,.45); transition:all .2s var(--ease); cursor:pointer;
   }
-  .search-btn:hover{ transform:translateY(-2px); box-shadow:0 12px 26px rgba(211,47,47,.38); }
-  .search-btn svg{ width:17px; height:17px; }
+  .search-btn:hover{ transform:translateY(-2px); box-shadow:0 12px 30px rgba(211,47,47,.6); }
 
-  @media (max-width:1080px){
-    .search-card{ grid-template-columns:1fr 1fr; grid-template-areas:"from swap" "to to" "date pax" "btn btn"; }
+  /* SCROLL HINT PILL */
+  .scroll-pill{
+    margin-top:28px; display:inline-flex; align-items:center; gap:10px;
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18);
+    padding:8px 18px; border-radius:100px; font-size:12.5px; font-weight:600; color:var(--slate-light);
+    backdrop-filter:blur(10px); animation:bounce 2s infinite;
+  }
+  @keyframes bounce { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(6px); } }
+
+  /* HUD HOTSPOTS FOR SHOT 2 */
+  .hud-wrapper {
+    position: relative; width: 100%; max-width: 1140px; height: 500px;
+  }
+  .hud-center-title {
+    text-align: center; margin-bottom: 24px;
+  }
+  .hud-center-title h2 {
+    font-size: 36px; font-weight: 800; color: #fff; letter-spacing: -.5px;
+  }
+  .hud-center-title p {
+    color: var(--slate-light); font-size: 16px; margin-top: 6px;
   }
 
-  /* ---------- STATS ---------- */
-  .stats-band{ background:#fff; border-bottom:1px solid var(--line); }
-  .stats-inner{
-    display:grid; grid-template-columns:repeat(4,1fr); padding:52px 0 44px; gap:20px;
+  .hud-pin {
+    position: absolute; display: flex; align-items: center; gap: 14px; z-index: 30; cursor: pointer;
+    transition: transform .3s var(--ease);
   }
-  .stat{ text-align:center; padding:0 16px; position:relative; }
-  .stat:not(:last-child)::after{
-    content:""; position:absolute; right:0; top:8px; bottom:8px; width:1px; background:var(--line);
-  }
-  .stat .num{ font-family:'Poppins'; font-weight:800; font-size:38px; color:var(--navy); letter-spacing:-1px; }
-  .stat .num span.plus{ color:var(--red); }
-  .stat .label{ margin-top:6px; font-size:13.5px; font-weight:600; color:var(--slate); }
+  .hud-pin:hover { transform: scale(1.06); }
 
-  /* ---------- SECTION HEADERS ---------- */
+  .hud-beacon {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--red); border: 3px solid #ffffff;
+    box-shadow: 0 0 24px rgba(211,47,47,0.9); position: relative;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .hud-beacon::after {
+    content: ""; position: absolute; inset: -9px; border-radius: 50%;
+    border: 2px solid var(--red); animation: hudPulse 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+  @keyframes hudPulse {
+    0% { transform: scale(0.6); opacity: 1; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+
+  .hud-info {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.22); padding: 14px 20px;
+    border-radius: 16px; color: #fff; box-shadow: 0 16px 36px rgba(0,0,0,0.5);
+    min-width: 220px;
+  }
+  .hud-info h4 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+  .hud-info p { font-size: 12.5px; color: var(--slate-light); line-height: 1.4; }
+
+  /* TELEMETRY & ROUTES FOR SHOT 3 */
+  .telemetry-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; max-width: 1140px; margin-bottom: 30px;
+  }
+  .tele-card {
+    background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px); border-radius: 20px; padding: 24px; text-align: center;
+  }
+  .tele-card .num { font-family: 'Poppins'; font-weight: 800; font-size: 38px; color: #fff; }
+  .tele-card .num span { color: var(--gold); }
+  .tele-card .label { font-size: 13.5px; color: var(--slate-light); margin-top: 6px; font-weight: 600; }
+
+  .routes-stage-box {
+    width: 100%; max-width: 1140px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .route-glass-card {
+    background: rgba(15, 23, 42, 0.78); border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(20px); border-radius: 20px; padding: 24px; color: #fff;
+    transition: all .3s var(--ease);
+  }
+  .route-glass-card:hover { transform: translateY(-6px); border-color: var(--red); box-shadow: 0 16px 40px rgba(211,47,47,0.3); }
+
+  /* SECTIONS BELOW CANAL SCROLL */
+  section { position: relative; z-index: 20; background: #0B1220; border-top: 1px solid var(--line); }
   .sec-head{ text-align:center; max-width:620px; margin:0 auto 52px; }
   .sec-eyebrow{
     display:inline-block; font-size:12.5px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase;
     color:var(--red); background:var(--red-tint); padding:6px 14px; border-radius:100px; margin-bottom:16px;
   }
-  .sec-head h2{ font-size:clamp(26px,3.4vw,36px); font-weight:800; color:var(--navy); letter-spacing:-.5px; }
+  .sec-head h2{ font-size:clamp(26px,3.4vw,38px); font-weight:800; color:#fff; letter-spacing:-.5px; }
   .sec-head p{ margin-top:14px; font-size:15.5px; color:var(--slate); line-height:1.65; }
 
-  /* ---------- FEATURES ---------- */
-  .features{ padding:96px 0 100px; }
+  .features{ padding:100px 0; }
   .feature-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
   .feature-card{
-    background:#fff; border:1px solid var(--line); border-radius:18px; padding:30px 26px;
-    transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
+    background:rgba(15, 23, 42, 0.6); border:1px solid var(--line); border-radius:20px; padding:30px 26px;
+    transition:all .3s var(--ease);
   }
-  .feature-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-md); border-color:transparent; }
+  .feature-card:hover{ transform:translateY(-6px); background:rgba(15, 23, 42, 0.9); border-color:rgba(255,255,255,0.25); }
   .feature-icon{
-    width:56px; height:56px; border-radius:15px; background:var(--red-tint);
+    width:56px; height:56px; border-radius:16px; background:var(--red-tint);
     display:flex; align-items:center; justify-content:center; margin-bottom:20px;
-    transition:transform .35s var(--ease);
   }
-  .feature-card:hover .feature-icon{ transform:rotate(-8deg) scale(1.08); }
   .feature-icon svg{ width:26px; height:26px; color:var(--red); }
-  .feature-card h3{ font-size:17.5px; font-weight:700; color:var(--ink); margin-bottom:9px; }
+  .feature-card h3{ font-size:18px; font-weight:700; color:#fff; margin-bottom:9px; }
   .feature-card p{ font-size:14px; color:var(--slate); line-height:1.6; }
 
-  @media (max-width:1080px){ .feature-grid, .stats-inner{ grid-template-columns:repeat(2,1fr); } }
+  .steps{ padding:100px 0; background:#070C16; }
+  .step-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .step{ background:rgba(15,23,42,0.6); border:1px solid var(--line); border-radius:20px; padding:36px 30px; position:relative; }
+  .step-num{ width:44px; height:44px; border-radius:12px; background:var(--red); color:#fff; font-family:'Poppins'; font-weight:800; font-size:20px; display:flex; align-items:center; justify-content:center; margin-bottom:22px; }
+  .step h3{ font-size:19px; font-weight:700; color:#fff; margin-bottom:10px; }
+  .step p{ font-size:14.5px; color:var(--slate); line-height:1.65; }
 
-  /* ---------- ROUTES ---------- */
-  .routes{ padding:20px 0 100px; background:var(--bg); }
-  .route-list{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
-  .route-card{
-    background:#fff; border:1px solid var(--line); border-radius:18px; padding:26px;
-    transition:transform .3s var(--ease), box-shadow .3s var(--ease);
-    position:relative; overflow:hidden;
-  }
-  .route-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow-md); }
-  .route-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-  .route-code{ font-size:11px; font-weight:600; color:var(--slate-light); letter-spacing:1px; }
-  .route-badge{ font-size:11px; font-weight:700; background:var(--blue-tint); color:var(--blue); padding:4px 10px; border-radius:100px; }
-  .route-cities{ display:flex; align-items:center; gap:10px; margin-bottom:6px; }
-  .route-cities .city{ font-family:'Poppins'; font-weight:700; font-size:17px; color:var(--navy); }
-  .route-line-mini{ flex:1; height:2px; background:repeating-linear-gradient(90deg,var(--line) 0 6px,transparent 6px 10px); position:relative; }
-  .route-line-mini::after{
-    content:""; position:absolute; right:-2px; top:50%; transform:translateY(-50%);
-    width:8px; height:8px; border-radius:50%; background:var(--red);
-  }
-  .route-meta{ display:flex; gap:16px; margin:16px 0 18px; font-size:12.5px; color:var(--slate); font-weight:600; }
-  .route-meta span{ display:flex; align-items:center; gap:5px; }
-  .route-meta svg{ width:13px; height:13px; }
-  .route-foot{ display:flex; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px dashed var(--line); }
-  .route-price{ font-family:'Poppins'; font-weight:800; font-size:20px; color:var(--red); }
-  .route-price span{ font-size:12px; color:var(--slate); font-weight:600; }
-  .route-cta{ font-size:13px; font-weight:700; color:var(--blue); display:flex; align-items:center; gap:5px; }
-  .route-cta svg{ width:13px; height:13px; transition:transform .2s; }
-  .route-card:hover .route-cta svg{ transform:translateX(3px); }
+  /* FOOTER */
+  footer { background: #04070E; border-top: 1px solid var(--line); padding: 80px 0 40px; color: var(--slate); font-size: 14px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 40px; margin-bottom: 60px; }
+  .footer-brand p { margin-top: 16px; max-width: 320px; line-height: 1.6; color: var(--slate); }
+  .footer-col h4 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 20px; }
+  .footer-col a { display: block; color: var(--slate); margin-bottom: 12px; transition: color .2s; }
+  .footer-col a:hover { color: #fff; }
+  .footer-bottom { border-top: 1px solid var(--line); padding-top: 32px; display: flex; justify-content: space-between; align-items: center; }
 
-  @media (max-width:1080px){ .route-list{ grid-template-columns:1fr; } }
-
-  /* ---------- HOW IT WORKS ---------- */
-  .steps{ padding:90px 0 100px; background:var(--navy); position:relative; overflow:hidden; }
-  .steps .sec-head h2, .steps .sec-head p{ color:#fff; }
-  .steps .sec-head p{ color:#AEB9D6; }
-  .steps .sec-eyebrow{ background:rgba(255,255,255,.1); color:#F2A93B; }
-  .step-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; position:relative; }
-  .step-row::before{
-    content:""; position:absolute; top:34px; left:16.5%; right:16.5%; height:1px;
-    background:repeating-linear-gradient(90deg, rgba(255,255,255,.25) 0 8px, transparent 8px 14px);
-  }
-  .step{ text-align:center; padding:0 24px; position:relative; }
-  .step-num{
-    width:68px; height:68px; border-radius:50%; background:var(--navy-2); border:2px solid rgba(255,255,255,.14);
-    display:flex; align-items:center; justify-content:center; margin:0 auto 24px; position:relative; z-index:2;
-    font-family:'Poppins'; font-weight:800; font-size:22px; color:#fff;
-    transition:transform .3s var(--ease), border-color .3s;
-  }
-  .step:hover .step-num{ transform:scale(1.08); border-color:var(--red); background:var(--red); }
-  .step h3{ font-size:18px; font-weight:700; color:#fff; margin-bottom:10px; }
-  .step p{ font-size:14px; color:#AEB9D6; line-height:1.6; max-width:260px; margin:0 auto; }
-
-  @media (max-width:1080px){ .step-row, .step-row::before{ display:none; }
-    .steps .step-row{ display:flex; flex-direction:column; gap:36px; } }
-
-  /* ---------- TESTIMONIALS ---------- */
-  .testimonials{ padding:96px 0 100px; }
-  .t-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
-  .t-card{
-    background:#fff; border:1px solid var(--line); border-radius:18px; padding:28px;
-    transition:transform .3s var(--ease), box-shadow .3s var(--ease);
-  }
-  .t-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow-md); }
-  .t-stars{ display:flex; gap:3px; margin-bottom:16px; }
-  .t-stars svg{ width:15px; height:15px; color:var(--gold); }
-  .t-card p.quote{ font-size:14.5px; line-height:1.7; color:var(--ink); margin-bottom:22px; }
-  .t-person{ display:flex; align-items:center; gap:12px; }
-  .t-avatar{
-    width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-    font-family:'Poppins'; font-weight:700; font-size:14px; color:#fff; flex-shrink:0;
-  }
-  .t-person .name{ font-size:14px; font-weight:700; color:var(--ink); }
-  .t-person .role{ font-size:12px; color:var(--slate); margin-top:1px; }
-
-  @media (max-width:1080px){ .t-grid{ grid-template-columns:1fr; } }
-
-  /* ---------- CTA BAND ---------- */
-  .cta-band{
-    margin:0 32px 100px; max-width:1176px; margin-left:auto; margin-right:auto;
-    background:linear-gradient(120deg, var(--red) 0%, #E8503F 45%, var(--navy) 100%);
-    border-radius:26px; padding:56px 60px; display:flex; align-items:center; justify-content:space-between; gap:40px;
-    position:relative; overflow:hidden;
-  }
-  .cta-band::before{
-    content:""; position:absolute; right:-60px; top:-60px; width:280px; height:280px; border-radius:50%;
-    background:rgba(255,255,255,.08);
-  }
-  .cta-band::after{
-    content:""; position:absolute; left:20%; bottom:-90px; width:220px; height:220px; border-radius:50%;
-    background:rgba(255,255,255,.06);
-  }
-  .cta-band h2{ color:#fff; font-size:clamp(24px,3vw,32px); font-weight:800; max-width:430px; position:relative; z-index:2; }
-  .cta-band p{ color:rgba(255,255,255,.85); margin-top:10px; font-size:14.5px; position:relative; z-index:2; }
-  .cta-band .btn-white{
-    background:#fff; color:var(--red); border:none; padding:15px 30px; border-radius:12px;
-    font-weight:700; font-size:15px; display:inline-flex; align-items:center; gap:8px; flex-shrink:0; position:relative; z-index:2;
-    transition:transform .2s var(--ease), box-shadow .2s;
-  }
-  .cta-band .btn-white:hover{ transform:translateY(-2px); box-shadow:0 14px 28px rgba(0,0,0,.2); }
-  .cta-band .btn-white svg{ width:16px; height:16px; }
-
-  @media (max-width:800px){ .cta-band{ flex-direction:column; text-align:center; padding:44px 32px; } }
-
-  /* ---------- FOOTER ---------- */
-  footer{ background:#0F1E3B; color:#B9C4DE; padding:70px 0 0; }
-  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr 1.2fr; gap:36px; padding-bottom:52px; border-bottom:1px solid rgba(255,255,255,.08); }
-  .footer-brand .logo-text .brand{ color:#fff; }
-  .footer-brand .logo-text .brand span{ color:var(--red); }
-  .footer-brand p{ margin-top:16px; font-size:13.5px; line-height:1.7; color:#8A96B8; max-width:240px; }
-  .foot-social{ display:flex; gap:10px; margin-top:20px; }
-  .foot-social a{
-    width:36px; height:36px; border-radius:9px; background:rgba(255,255,255,.06); display:flex; align-items:center; justify-content:center;
-    transition:background .2s, transform .2s;
-  }
-  .foot-social a:hover{ background:var(--red); transform:translateY(-2px); }
-  .foot-social svg{ width:16px; height:16px; color:#fff; }
-  .footer-col h4{ color:#fff; font-size:14.5px; font-weight:700; margin-bottom:18px; }
-  .footer-col a{ display:block; font-size:13.5px; color:#8A96B8; margin-bottom:12px; transition:color .2s, transform .2s; }
-  .footer-col a:hover{ color:#fff; transform:translateX(3px); }
-  .footer-col .contact-row{ display:flex; gap:10px; align-items:flex-start; margin-bottom:14px; font-size:13.5px; color:#8A96B8; }
-  .footer-col .contact-row svg{ width:15px; height:15px; color:var(--red); flex-shrink:0; margin-top:1px; }
-  .footer-bottom{ display:flex; justify-content:space-between; align-items:center; padding:24px 0; font-size:12.5px; color:#748099; flex-wrap:wrap; gap:10px; }
-  .footer-bottom .legal a{ margin-left:20px; color:#748099; transition:color .2s; }
-  .footer-bottom .legal a:hover{ color:#fff; }
-
-  @media (max-width:1080px){ .footer-grid{ grid-template-columns:repeat(2,1fr); } }
-
-  /* ---------- REVEAL ANIM ---------- */
-  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
-  .reveal.in{ opacity:1; transform:none; }
-  .reveal-stagger .in{ transition-delay:var(--d,0s); }
-
-  @media (prefers-reduced-motion: reduce){
-    *{ animation:none !important; transition:none !important; }
-    .reveal{ opacity:1; transform:none; }
-  }
-
-  @media (max-width:640px){
-    .container{ padding:0 20px; }
-    nav.links{ display:none; }
-    .hero-grid{ grid-template-columns:1fr; }
-    .route-visual{ height:260px; margin-top:24px; }
-    .search-card{ grid-template-columns:1fr; margin-top:-70px; padding:22px; }
-    .swap-btn{ display:none; }
-    .cta-band{ margin:0 16px 70px; }
+  @media (max-width:1080px){
+    .search-card{ grid-template-columns:1fr 1fr; }
+    .telemetry-grid, .routes-stage-box, .feature-grid, .step-row, .footer-grid { grid-template-columns:1fr 1fr; }
   }
 </style>
 </head>
 <body>
 
+<!-- CONTINUOUS BACKGROUND CANVAS -->
+<canvas id="scrollCanvas"></canvas>
+<div class="canvas-overlay"></div>
+
+<!-- STICKY NAVBAR -->
 <header id="header">
   <div class="nav-inner">
-    <div class="logo">
+    <a href="#" class="logo">
       <div class="logo-badge">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M4 16l3-9a2 2 0 0 1 1.9-1.4h6.2A2 2 0 0 1 17 7l3 9M4 16v3a1 1 0 0 0 1 1h1.5M4 16h16m0 0v3a1 1 0 0 1-1 1h-1.5M8.5 20v-2m7 2v-2M6.5 12h11" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="17.5" r="1.4" fill="#fff"/><circle cx="16" cy="17.5" r="1.4" fill="#fff"/></svg>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 16l3-9a2 2 0 0 1 1.9-1.4h6.2A2 2 0 0 1 17 7l3 9M4 16v3a1 1 0 0 0 1 1h1.5M4 16h16m0 0v3a1 1 0 0 1-1 1h-1.5M8.5 20v-2m7 2v-2M6.5 12h11" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <div class="logo-text">
         <span class="brand">POSTA <span>KENYA</span></span>
-        <span class="tagline">Touching lives</span>
+        <span class="tagline">EXECUTIVE LINER</span>
       </div>
-    </div>
+    </a>
     <nav class="links">
-      <a href="#" class="active">Home</a>
-      <a href="#routes">Book ticket</a>
-      <a href="#">My bookings</a>
-      <a href="#routes">Destinations</a>
-      <a href="#">Help &amp; support <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="#searchStage" class="active">Book Ticket</a>
+      <a href="#features">Experience</a>
+      <a href="#routes">Routes</a>
+      <a href="#steps">How it Works</a>
     </nav>
     <div class="nav-actions">
-      <button class="btn btn-ghost"><svg viewBox="0 0 24 24" fill="none"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 20c1.5-3.5 4.7-5.5 8-5.5s6.5 2 8 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Login</button>
-      <button class="btn btn-solid"><svg viewBox="0 0 24 24" fill="none"><path d="M9 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2.5 20c1.4-3.4 3.7-5.5 6.5-5.5M17 8v6M20 11h-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Register</button>
+      <a href="frontend/dist/index.html" class="btn btn-ghost">Sign In</a>
+      <a href="#searchStage" class="btn btn-solid">Book Now</a>
     </div>
   </div>
 </header>
 
-<section class="hero">
-  <div class="hero-noise"></div>
-  <div class="container">
-    <div class="hero-grid">
-      <div>
-        <div class="eyebrow" id="a-eyebrow"><span class="dot"></span>Now serving 47 counties across Kenya</div>
-        <h1 id="a-h1">Travel across Kenya<br>with <span class="accent">Posta Kenya</span></h1>
-        <p class="lead" id="a-lead">Book your bus tickets easily and securely. Comfortable journeys connecting you to the people and places that matter.</p>
-        <div class="trust-row" id="a-trust">
-          <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.6-3 8.4-7 9.4-4-1-7-4.8-7-9.4V6l7-3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Safe &amp; secure</div>
-          <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 18v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6M4 18h16M6 18v2M18 18v2M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Comfortable seats</div>
-          <div class="trust-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>On-time service</div>
+<!-- MAIN SCROLL TRACK (DRIP FRAME CONTROLLER) -->
+<div class="scroll-track" id="scrollTrack">
+  <div class="scroll-sticky">
+
+    <!-- STAGE 1: HERO ORBIT & BOOKING SEARCH (0% - 33.3% SCROLL) -->
+    <div class="overlay-stage active" id="stage1">
+      <div class="hero-title-box">
+        <div class="eyebrow"><span class="dot"></span> 47 COUNTIES · EXECUTIVE EXPRESS</div>
+        <h1>Travel Across Kenya in <span class="accent">First-Class</span></h1>
+        <p>Experience Kenya's premium coach network with real-time seat mapping, high-speed Wi-Fi, and 99.8% on-time arrivals.</p>
+      </div>
+
+      <div class="glass-panel search-card" id="searchStage">
+        <div class="field">
+          <label>From</label>
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z" stroke="currentColor" stroke-width="1.8"/></svg>
+            <input type="text" id="fromInput" value="Nairobi (Posta House)" placeholder="Select origin">
+          </div>
+        </div>
+
+        <button class="swap-btn" id="swapBtn" title="Swap locations">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="field">
+          <label>To</label>
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z" stroke="currentColor" stroke-width="1.8"/></svg>
+            <input type="text" id="toInput" value="Mombasa (Coast Terminal)" placeholder="Select destination">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Departure Date</label>
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="1.8"/></svg>
+            <input type="date" id="dateInput" value="2026-08-01">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Passengers</label>
+          <div class="input-wrap">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
+            <select id="paxSelect">
+              <option>1 Passenger</option>
+              <option>2 Passengers</option>
+              <option>3 Passengers</option>
+              <option>4+ Passengers</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="search-btn" id="searchBtn">
+          Search Seats
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="scroll-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Scroll down to explore luxury interior cabin
+      </div>
+    </div>
+
+    <!-- STAGE 2: CABIN ZOOM & INTERACTIVE HUD HOTSPOTS (33.3% - 66.6% SCROLL) -->
+    <div class="overlay-stage" id="stage2">
+      <div class="hud-center-title">
+        <div class="eyebrow"><span class="dot"></span> INTERIOR ARCHITECTURE</div>
+        <h2>Executive Cabin Experience</h2>
+        <p>Engineered for maximum legroom, privacy, and seamless work on the move.</p>
+      </div>
+
+      <div class="hud-wrapper">
+        <!-- Pin 1: VIP Seats -->
+        <div class="hud-pin" style="top: 20%; left: 10%;">
+          <div class="hud-beacon"></div>
+          <div class="hud-info">
+            <h4>140° Ergonomic Recline</h4>
+            <p>Plush Italian memory-foam seating with individual footrests.</p>
+          </div>
+        </div>
+
+        <!-- Pin 2: Starlink Wi-Fi -->
+        <div class="hud-pin" style="top: 15%; right: 12%;">
+          <div class="hud-beacon"></div>
+          <div class="hud-info">
+            <h4>Starlink High-Speed Wi-Fi</h4>
+            <p>Stream HD video & video call seamlessly at 100km/h.</p>
+          </div>
+        </div>
+
+        <!-- Pin 3: Power & AC -->
+        <div class="hud-pin" style="bottom: 25%; left: 15%;">
+          <div class="hud-beacon"></div>
+          <div class="hud-info">
+            <h4>USB-C & AC Outlets</h4>
+            <p>Dual 65W fast-charging ports built into every armrest.</p>
+          </div>
+        </div>
+
+        <!-- Pin 4: HEPA Air Filter -->
+        <div class="hud-pin" style="bottom: 20%; right: 18%;">
+          <div class="hud-beacon"></div>
+          <div class="hud-info">
+            <h4>HEPA Climate Control</h4>
+            <p>99.97% air purification with personalized vent controls.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE 3: HIGH ANGLE DRONE TRACK & TELEMETRY (66.6% - 100% SCROLL) -->
+    <div class="overlay-stage" id="stage3">
+      <div class="hud-center-title">
+        <div class="eyebrow"><span class="dot"></span> NATIONWIDE NETWORK</div>
+        <h2>Powering Kenya's Transit Infrastructure</h2>
+        <p>Connecting major metropolitan hubs and rural counties with clockwork precision.</p>
+      </div>
+
+      <div class="telemetry-grid">
+        <div class="tele-card">
+          <div class="num" data-count="47">47</div>
+          <div class="label">Counties Connected</div>
+        </div>
+        <div class="tele-card">
+          <div class="num">99.8<span>%</span></div>
+          <div class="label">On-Time Reliability</div>
+        </div>
+        <div class="tele-card">
+          <div class="num">1.2<span>M+</span></div>
+          <div class="label">Annual Travelers</div>
+        </div>
+        <div class="tele-card">
+          <div class="num" data-count="350">350<span>+</span></div>
+          <div class="label">Daily Express Trips</div>
         </div>
       </div>
 
-      <div class="route-visual" id="a-route">
-        <svg viewBox="0 0 420 380" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <linearGradient id="routeGrad" x1="0" y1="0" x2="420" y2="380" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stop-color="#3D6FE0"/>
-              <stop offset="1" stop-color="#D32F2F"/>
-            </linearGradient>
-          </defs>
-          <path id="routePath" class="route-glow" d="M60 60 C 180 60, 120 190, 220 190 S 340 320, 360 320"/>
-          <path class="route-path" d="M60 60 C 180 60, 120 190, 220 190 S 340 320, 360 320"/>
+      <div class="routes-stage-box" id="routes">
+        <div class="route-glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span class="mono" style="font-size:11px; color:var(--gold);">RT-001 · EXPRESS</span>
+            <span style="font-size:12px; font-weight:700; color:#4ADE80;">14 Seats Left</span>
+          </div>
+          <h3 style="font-size:20px; margin-bottom:8px;">Nairobi → Mombasa</h3>
+          <p style="font-size:13px; color:var(--slate-light); margin-bottom:16px;">Daily depart at 07:00 AM · 8h 15m</p>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:18px; font-weight:800; color:var(--gold);">KES 1,500</span>
+            <button class="btn btn-solid" style="padding:8px 16px; font-size:13px;" onclick="document.getElementById('searchStage').scrollIntoView({behavior:'smooth'})">Select Seat</button>
+          </div>
+        </div>
 
-          <g class="city-pin" transform="translate(60,60)">
-            <circle class="ring" cx="0" cy="0" r="9"/>
-            <circle class="dot" cx="0" cy="0" r="7"/>
-            <text class="city-label" x="16" y="-6">Nairobi</text>
-            <text class="city-sub" x="16" y="10">NBO · DEP 07:30</text>
-          </g>
-          <g class="city-pin" transform="translate(220,190)">
-            <circle class="dot" cx="0" cy="0" r="5.5" fill="#fff" stroke="#3D6FE0" stroke-width="2.5"/>
-            <text class="city-sub" x="12" y="4" fill="#7C8AB0">Nakuru stop</text>
-          </g>
-          <g class="city-pin end" transform="translate(360,320)">
-            <circle class="ring delay" cx="0" cy="0" r="9"/>
-            <circle class="dot" cx="0" cy="0" r="7"/>
-            <text class="city-label" x="-70" y="-6">Mombasa</text>
-            <text class="city-sub" x="-70" y="10">MSA · ARR 15:45</text>
-          </g>
+        <div class="route-glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span class="mono" style="font-size:11px; color:var(--gold);">RT-014 · SCENIC</span>
+            <span style="font-size:12px; font-weight:700; color:#4ADE80;">22 Seats Left</span>
+          </div>
+          <h3 style="font-size:20px; margin-bottom:8px;">Nairobi → Kisumu</h3>
+          <p style="font-size:13px; color:var(--slate-light); margin-bottom:16px;">Daily depart at 08:30 AM · 6h 40m</p>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:18px; font-weight:800; color:var(--gold);">KES 1,200</span>
+            <button class="btn btn-solid" style="padding:8px 16px; font-size:13px;" onclick="document.getElementById('searchStage').scrollIntoView({behavior:'smooth'})">Select Seat</button>
+          </div>
+        </div>
 
-          <g class="bus-marker-wrap" style="offset-path:path('M60 60 C 180 60, 120 190, 220 190 S 340 320, 360 320');">
-            <g class="bus-marker" transform="translate(-17,-17)">
-              <circle cx="17" cy="17" r="17" fill="#fff"/>
-              <circle cx="17" cy="17" r="17" fill="none" stroke="#D32F2F" stroke-width="1.5"/>
-              <g transform="translate(6,9)">
-                <rect x="0" y="2" width="22" height="12" rx="3" fill="#D32F2F"/>
-                <rect x="2" y="4" width="6" height="4.5" rx="1" fill="#fff"/>
-                <rect x="9.5" y="4" width="6" height="4.5" rx="1" fill="#fff"/>
-                <circle cx="5" cy="15" r="2" fill="#14274D"/>
-                <circle cx="17" cy="15" r="2" fill="#14274D"/>
-              </g>
-            </g>
-          </g>
-        </svg>
+        <div class="route-glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span class="mono" style="font-size:11px; color:var(--gold);">RT-027 · SHUTTLE</span>
+            <span style="font-size:12px; font-weight:700; color:#4ADE80;">9 Seats Left</span>
+          </div>
+          <h3 style="font-size:20px; margin-bottom:8px;">Nakuru → Eldoret</h3>
+          <p style="font-size:13px; color:var(--slate-light); margin-bottom:16px;">Hourly depart · 2h 50m</p>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:18px; font-weight:800; color:var(--gold);">KES 800</span>
+            <button class="btn btn-solid" style="padding:8px 16px; font-size:13px;" onclick="document.getElementById('searchStage').scrollIntoView({behavior:'smooth'})">Select Seat</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="mountain-layer">
-    <svg viewBox="0 0 1440 180" preserveAspectRatio="none">
-      <path d="M0 180 L0 90 L120 40 L240 100 L360 30 L520 110 L640 55 L760 120 L900 45 L1020 100 L1160 60 L1300 115 L1440 70 L1440 180 Z" fill="#0F1E3B" opacity="0.55"/>
-      <path d="M0 180 L0 130 L160 80 L300 140 L460 75 L620 145 L780 90 L940 150 L1100 95 L1260 150 L1440 110 L1440 180 Z" fill="#0F1E3B" opacity="0.85"/>
-    </svg>
-  </div>
-</section>
-
-<div class="container">
-  <div class="search-card" id="a-search">
-    <div class="field">
-      <label>From</label>
-      <div class="input-wrap">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.8"/></svg>
-        <input id="fromInput" type="text" placeholder="Select departure" value="Nairobi">
-      </div>
-    </div>
-    <button class="swap-btn" id="swapBtn" aria-label="Swap origin and destination">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M7 7h13M17 3l3 4-3 4M17 17H4M7 21l-3-4 3-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <div class="field">
-      <label>To</label>
-      <div class="input-wrap">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.8"/></svg>
-        <input id="toInput" type="text" placeholder="Select destination" value="Mombasa">
-      </div>
-    </div>
-    <div class="field">
-      <label>Journey date</label>
-      <div class="input-wrap">
-        <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="16" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M8 3v4M16 3v4M3.5 10h17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <input type="date">
-      </div>
-    </div>
-    <div class="field">
-      <label>Passengers</label>
-      <div class="input-wrap">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c1.6-4 4-6 7-6s5.4 2 7 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <select>
-          <option>1 Passenger</option>
-          <option>2 Passengers</option>
-          <option>3 Passengers</option>
-          <option>4 Passengers</option>
-        </select>
-      </div>
-    </div>
-    <button class="search-btn" id="searchBtn">
-      <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#fff" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-      Search buses
-    </button>
   </div>
 </div>
 
-<section class="stats-band">
+<!-- ADDITIONAL CONTENT SECTIONS -->
+<section class="features" id="features">
   <div class="container">
-    <div class="stats-inner">
-      <div class="stat reveal"><div class="num" data-count="47">0</div><div class="label">Counties covered</div></div>
-      <div class="stat reveal"><div class="num" data-count="120"><span class="plus"></span>0</div><div class="label">Daily departures</div></div>
-      <div class="stat reveal"><div class="num" data-count="850000" data-suffix="+">0</div><div class="label">Happy travelers</div></div>
-      <div class="stat reveal"><div class="num" data-count="98" data-suffix="%">0</div><div class="label">On-time arrivals</div></div>
+    <div class="sec-head">
+      <span class="sec-eyebrow">The Posta Standard</span>
+      <h2>Designed for safe, seamless travel</h2>
+      <p>Every Posta Kenya coach is outfitted with cutting-edge telemetry, GPS tracking, and luxury amenities.</p>
     </div>
-  </div>
-</section>
-
-<section class="features">
-  <div class="container">
-    <div class="sec-head reveal">
-      <span class="sec-eyebrow">Why ride with us</span>
-      <h2>Built for the Kenyan road, mile after mile</h2>
-      <p>Every fleet, route and support line is designed around one thing — getting you there safely, on time, in comfort.</p>
-    </div>
-    <div class="feature-grid reveal-stagger">
-      <div class="feature-card reveal" style="--d:0s">
-        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.6-3 8.4-7 9.4-4-1-7-4.8-7-9.4V6l7-3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>Safe &amp; secure</h3>
-        <p>Your safety is our priority, backed by trusted travel standards and vetted drivers on every route.</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <h3>Guaranteed Schedules</h3>
+        <p>Strict departure schedules monitored by fleet telematics so you never lose time.</p>
       </div>
-      <div class="feature-card reveal" style="--d:.08s">
-        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 18v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6M4 18h16M6 18v2M18 18v2M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>Comfortable journeys</h3>
-        <p>Spacious reclining seats and modern coaches designed for a relaxed, restful ride.</p>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Verified Drivers</h3>
+        <p>Bi-annually certified long-distance captains trained in safety & defensive driving.</p>
       </div>
-      <div class="feature-card reveal" style="--d:.16s">
-        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>On time, always</h3>
-        <p>We value your schedule and hold ourselves to strict, dependable departure times.</p>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="1.8"/></svg></div>
+        <h3>Instant M-Pesa Booking</h3>
+        <p>Reserve seats in under 60 seconds with instant digital boarding passes sent to SMS/Email.</p>
       </div>
-      <div class="feature-card reveal" style="--d:.24s">
-        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 1 9 9M3 12l3-3M3 12l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg></div>
-        <h3>24/7 customer support</h3>
-        <p>Real people, ready to help with bookings, changes, or questions anytime, anywhere.</p>
+      <div class="feature-card">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 1 9 9M3 12l3-3M3 12l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>24/7 Concierge Support</h3>
+        <p>Live customer service ready to assist with rescheduling, baggage, and route changes.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="routes" id="routes">
+<section class="steps" id="steps">
   <div class="container">
-    <div class="sec-head reveal">
-      <span class="sec-eyebrow">Popular routes</span>
-      <h2>Kenya's best-loved journeys</h2>
-      <p>From coastal sunrises to highland air — these are the routes travelers book again and again.</p>
+    <div class="sec-head">
+      <span class="sec-eyebrow">How It Works</span>
+      <h2>Book your seat in 3 simple steps</h2>
     </div>
-    <div class="route-list reveal-stagger">
-      <div class="route-card reveal" style="--d:0s">
-        <div class="route-top"><span class="route-code mono">RT-001 · DAILY</span><span class="route-badge">Most booked</span></div>
-        <div class="route-cities"><span class="city">Nairobi</span><div class="route-line-mini"></div><span class="city">Mombasa</span></div>
-        <div class="route-meta"><span><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>8h 15m</span><span><svg viewBox="0 0 24 24" fill="none"><path d="M4 18v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6" stroke="currentColor" stroke-width="1.6"/><circle cx="7" cy="18" r="1.4" fill="currentColor"/><circle cx="17" cy="18" r="1.4" fill="currentColor"/></svg>14 seats left</span></div>
-        <div class="route-foot"><div class="route-price">KES 1,500 <span>/seat</span></div><div class="route-cta">Book now <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-      </div>
-      <div class="route-card reveal" style="--d:.1s">
-        <div class="route-top"><span class="route-code mono">RT-014 · DAILY</span><span class="route-badge">Scenic</span></div>
-        <div class="route-cities"><span class="city">Nairobi</span><div class="route-line-mini"></div><span class="city">Kisumu</span></div>
-        <div class="route-meta"><span><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>6h 40m</span><span><svg viewBox="0 0 24 24" fill="none"><path d="M4 18v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6" stroke="currentColor" stroke-width="1.6"/><circle cx="7" cy="18" r="1.4" fill="currentColor"/><circle cx="17" cy="18" r="1.4" fill="currentColor"/></svg>22 seats left</span></div>
-        <div class="route-foot"><div class="route-price">KES 1,200 <span>/seat</span></div><div class="route-cta">Book now <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-      </div>
-      <div class="route-card reveal" style="--d:.2s">
-        <div class="route-top"><span class="route-code mono">RT-027 · DAILY</span><span class="route-badge">Express</span></div>
-        <div class="route-cities"><span class="city">Nakuru</span><div class="route-line-mini"></div><span class="city">Eldoret</span></div>
-        <div class="route-meta"><span><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>2h 50m</span><span><svg viewBox="0 0 24 24" fill="none"><path d="M4 18v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6" stroke="currentColor" stroke-width="1.6"/><circle cx="7" cy="18" r="1.4" fill="currentColor"/><circle cx="17" cy="18" r="1.4" fill="currentColor"/></svg>9 seats left</span></div>
-        <div class="route-foot"><div class="route-price">KES 800 <span>/seat</span></div><div class="route-cta">Book now <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="steps">
-  <div class="container">
-    <div class="sec-head reveal">
-      <span class="sec-eyebrow">How it works</span>
-      <h2>Book your seat in three steps</h2>
-      <p>No queues, no paperwork — just a smooth path from search to seat.</p>
-    </div>
-    <div class="step-row reveal-stagger">
-      <div class="step reveal" style="--d:0s">
+    <div class="step-row">
+      <div class="step">
         <div class="step-num">1</div>
-        <h3>Search your route</h3>
-        <p>Pick your departure, destination and travel date to see live buses.</p>
+        <h3>Select Your Route</h3>
+        <p>Pick your departure location, destination, and travel date across 47 counties.</p>
       </div>
-      <div class="step reveal" style="--d:.12s">
+      <div class="step">
         <div class="step-num">2</div>
-        <h3>Choose your seat</h3>
-        <p>Compare times and coaches, then pick the exact seat you want.</p>
+        <h3>Choose Preferred Seat</h3>
+        <p>View interactive bus layout and pick your exact VIP seat with extra legroom.</p>
       </div>
-      <div class="step reveal" style="--d:.24s">
+      <div class="step">
         <div class="step-num">3</div>
-        <h3>Pay &amp; travel</h3>
-        <p>Pay securely with M-Pesa or card and get your ticket instantly.</p>
+        <h3>Pay &amp; Board</h3>
+        <p>Pay securely via M-Pesa or Card and show your digital QR ticket at boarding.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="testimonials">
-  <div class="container">
-    <div class="sec-head reveal">
-      <span class="sec-eyebrow">Traveler stories</span>
-      <h2>Trusted across the country</h2>
-      <p>Real reviews from riders who've made Posta Kenya part of their journey.</p>
-    </div>
-    <div class="t-grid reveal-stagger">
-      <div class="t-card reveal" style="--d:0s">
-        <div class="t-stars">★★★★★</div>
-        <p class="quote">Booked my Nairobi to Mombasa ticket in under two minutes. The seat was exactly as shown and the bus left right on time.</p>
-        <div class="t-person"><div class="t-avatar" style="background:var(--red)">WM</div><div><div class="name">Wanjiru M.</div><div class="role">Nairobi → Mombasa</div></div></div>
-      </div>
-      <div class="t-card reveal" style="--d:.1s">
-        <div class="t-stars">★★★★★</div>
-        <p class="quote">Support team helped me rebook after I missed my slot, no hassle at all. This is now my default way to travel upcountry.</p>
-        <div class="t-person"><div class="t-avatar" style="background:var(--blue)">OK</div><div><div class="name">Otieno K.</div><div class="role">Nairobi → Kisumu</div></div></div>
-      </div>
-      <div class="t-card reveal" style="--d:.2s">
-        <div class="t-stars">★★★★★</div>
-        <p class="quote">Clean coaches, comfortable legroom and a driver who actually kept to the schedule. Couldn't ask for more on a long ride.</p>
-        <div class="t-person"><div class="t-avatar" style="background:var(--navy)">AN</div><div><div class="name">Amina N.</div><div class="role">Nakuru → Eldoret</div></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="cta-band reveal">
-  <div>
-    <h2>Your next journey is one search away</h2>
-    <p>Join thousands of travelers who book with Posta Kenya every day.</p>
-  </div>
-  <button class="btn-white" onclick="document.getElementById('fromInput').scrollIntoView({behavior:'smooth', block:'center'})">
-    Book your ticket
-    <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-</div>
-
+<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -712,133 +636,154 @@
           </div>
           <div class="logo-text"><span class="brand">POSTA <span>KENYA</span></span></div>
         </div>
-        <p>Connecting Kenya, one journey at a time. Safe, comfortable and reliable bus travel across 47 counties.</p>
-        <div class="foot-social">
-          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none"><path d="M14 9h3V6h-3a4 4 0 0 0-4 4v2H8v3h2v6h3v-6h2.5l.5-3H13v-1.5A1.5 1.5 0 0 1 14.5 9H14z" fill="#fff"/></svg></a>
-          <a href="#" aria-label="Twitter / X"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M20 4L4 20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></a>
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="12" r="3.4" stroke="#fff" stroke-width="1.6"/><circle cx="16.6" cy="7.4" r="1" fill="#fff"/></svg></a>
-        </div>
+        <p>Connecting Kenya, one luxury journey at a time. Safe, comfortable, and reliable bus travel across all 47 counties.</p>
       </div>
       <div class="footer-col">
         <h4>Company</h4>
-        <a href="#">About us</a><a href="#">Careers</a><a href="#">Newsroom</a><a href="#">Partners</a>
+        <a href="#">About us</a><a href="#">Fleet</a><a href="#">Newsroom</a><a href="#">Careers</a>
       </div>
       <div class="footer-col">
         <h4>Support</h4>
-        <a href="#">Help center</a><a href="#">Refunds</a><a href="#">Track ticket</a><a href="#">Terms of use</a>
+        <a href="#">Help Center</a><a href="#">Track Ticket</a><a href="#">Refund Policy</a><a href="#">Terms</a>
       </div>
       <div class="footer-col">
-        <h4>Destinations</h4>
-        <a href="#">Nairobi</a><a href="#">Mombasa</a><a href="#">Kisumu</a><a href="#">Eldoret</a>
+        <h4>Top Routes</h4>
+        <a href="#">Nairobi → Mombasa</a><a href="#">Nairobi → Kisumu</a><a href="#">Nakuru → Eldoret</a><a href="#">Mombasa → Malindi</a>
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <div class="contact-row"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.8"/></svg><span>Posta House, Kenyatta Ave, Nairobi</span></div>
-        <div class="contact-row"><svg viewBox="0 0 24 24" fill="none"><path d="M3 5h4l2 5-2.5 1.5a11 11 0 0 0 5 5L13 14l5 2v4a2 2 0 0 1-2 2C9 22 2 15 2 7a2 2 0 0 1 1-2z" stroke="currentColor" stroke-width="1.6"/></svg><span>0800 220 220</span></div>
-        <div class="contact-row"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.6"/></svg><span>hello@postakenya.co.ke</span></div>
+        <a href="#">Posta House, Kenyatta Ave, Nairobi</a>
+        <a href="#">0800 220 220</a>
+        <a href="#">hello@postakenya.co.ke</a>
       </div>
     </div>
     <div class="footer-bottom">
       <span>© 2026 Posta Kenya. All rights reserved.</span>
-      <span class="legal"><a href="#">Privacy policy</a><a href="#">Terms</a><a href="#">Cookies</a></span>
+      <span>Executive Passenger Transport & Telematics</span>
     </div>
   </div>
 </footer>
 
+<!-- CONTINUOUS CANVAS SCROLL ENGINE JAVASCRIPT -->
 <script>
-  // sticky navbar shadow
+  const totalFrames = 150;
+  const images = [];
+  let framesLoaded = 0;
+  let currentFrameIndex = 0;
+  let targetFrameIndex = 0;
+
+  const canvas = document.getElementById('scrollCanvas');
+  const ctx = canvas.getContext('2d');
+
+  function resizeCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.scale(dpr, dpr);
+    renderFrame(currentFrameIndex);
+  }
+  window.addEventListener('resize', resizeCanvas);
+
+  function drawImageCover(img) {
+    if (!img || !img.complete || img.naturalWidth === 0) return;
+    const cw = window.innerWidth;
+    const ch = window.innerHeight;
+    const imgRatio = img.naturalWidth / img.naturalHeight;
+    const canvasRatio = cw / ch;
+
+    let renderW, renderH, x, y;
+    if (canvasRatio > imgRatio) {
+      renderW = cw;
+      renderH = cw / imgRatio;
+      x = 0;
+      y = (ch - renderH) / 2;
+    } else {
+      renderH = ch;
+      renderW = ch * imgRatio;
+      x = (cw - renderW) / 2;
+      y = 0;
+    }
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.drawImage(img, x, y, renderW, renderH);
+  }
+
+  function renderFrame(index) {
+    const idx = Math.max(0, Math.min(totalFrames - 1, Math.floor(index)));
+    const img = images[idx];
+    if (img && img.complete) {
+      drawImageCover(img);
+    }
+  }
+
+  function animate() {
+    currentFrameIndex += (targetFrameIndex - currentFrameIndex) * 0.12;
+    renderFrame(currentFrameIndex);
+    requestAnimationFrame(animate);
+  }
+
+  // Preload sequence
+  for (let i = 1; i <= totalFrames; i++) {
+    const img = new Image();
+    const numStr = String(i).padStart(3, '0');
+    img.src = `assets/frames/frame_${numStr}.jpg`;
+    img.onload = () => {
+      framesLoaded++;
+      if (i === 1) {
+        resizeCanvas();
+      }
+    };
+    images.push(img);
+  }
+
+  // Scroll Progress Tracking
+  const scrollTrack = document.getElementById('scrollTrack');
+  const stage1 = document.getElementById('stage1');
+  const stage2 = document.getElementById('stage2');
+  const stage3 = document.getElementById('stage3');
   const header = document.getElementById('header');
+
   window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 12);
-  }, {passive:true});
+    header.classList.toggle('scrolled', window.scrollY > 20);
 
-  // hero load-in sequence
-  const seq = [
-    ['a-eyebrow', 0],
-    ['a-h1', 120],
-    ['a-lead', 260],
-    ['a-trust', 380],
-    ['a-route', 200],
-    ['a-search', 520]
-  ];
-  seq.forEach(([id, delay]) => {
-    const el = document.getElementById(id);
-    if(!el) return;
-    setTimeout(() => {
-      el.style.transition = 'opacity .8s cubic-bezier(.22,.68,.36,1), transform .8s cubic-bezier(.22,.68,.36,1)';
-      el.style.opacity = 1;
-      el.style.transform = 'none';
-    }, delay);
-  });
+    if (!scrollTrack) return;
+    const rect = scrollTrack.getBoundingClientRect();
+    const trackHeight = scrollTrack.offsetHeight - window.innerHeight;
+    const scrollProgress = Math.max(0, Math.min(1, (-rect.top) / trackHeight));
 
-  // swap button
+    targetFrameIndex = scrollProgress * (totalFrames - 1);
+
+    // Stage visibility mapping
+    if (scrollProgress < 0.33) {
+      stage1.classList.add('active');
+      stage2.classList.remove('active');
+      stage3.classList.remove('active');
+    } else if (scrollProgress >= 0.33 && scrollProgress < 0.68) {
+      stage1.classList.remove('active');
+      stage2.classList.add('active');
+      stage3.classList.remove('active');
+    } else {
+      stage1.classList.remove('active');
+      stage2.classList.remove('active');
+      stage3.classList.add('active');
+    }
+  }, { passive: true });
+
+  // Swap locations button
   const swapBtn = document.getElementById('swapBtn');
   const fromInput = document.getElementById('fromInput');
   const toInput = document.getElementById('toInput');
-  swapBtn.addEventListener('click', () => {
-    swapBtn.classList.toggle('spin');
-    const tmp = fromInput.value;
-    fromInput.value = toInput.value;
-    toInput.value = tmp;
-  });
-
-  // search button feedback (POC — no backend)
-  document.getElementById('searchBtn').addEventListener('click', () => {
-    const btn = document.getElementById('searchBtn');
-    const original = btn.innerHTML;
-    btn.innerHTML = 'Searching…';
-    btn.style.opacity = '.85';
-    setTimeout(() => {
-      document.getElementById('routes').scrollIntoView({behavior:'smooth', block:'start'});
-      btn.innerHTML = original;
-      btn.style.opacity = '1';
-    }, 700);
-  });
-
-  // scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
-      }
+  if (swapBtn) {
+    swapBtn.addEventListener('click', () => {
+      const tmp = fromInput.value;
+      fromInput.value = toInput.value;
+      toInput.value = tmp;
     });
-  }, {threshold:0.15, rootMargin:'0px 0px -60px 0px'});
-  revealEls.forEach(el => io.observe(el));
+  }
 
-  // stat counters
-  const counters = document.querySelectorAll('.stat .num');
-  const counted = new WeakSet();
-  const cio = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting && !counted.has(entry.target)){
-        counted.add(entry.target);
-        const el = entry.target;
-        const target = parseInt(el.dataset.count, 10);
-        const suffix = el.dataset.suffix || '';
-        const hasPlus = el.querySelector('.plus') !== null;
-        const dur = 1600;
-        const start = performance.now();
-        function tick(now){
-          const p = Math.min((now - start) / dur, 1);
-          const eased = 1 - Math.pow(1 - p, 3);
-          const val = Math.floor(target * eased);
-          el.textContent = val.toLocaleString();
-          if(hasPlus){
-            const span = document.createElement('span');
-            span.className = 'plus';
-            el.prepend(span);
-          }
-          if(suffix) el.textContent = val.toLocaleString() + suffix;
-          if(p < 1) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-      }
-    });
-  }, {threshold:0.4});
-  counters.forEach(el => cio.observe(el));
+  // Start animation loop
+  animate();
 </script>
-
 </body>
 </html>

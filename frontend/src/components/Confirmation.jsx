@@ -32,7 +32,7 @@ export default function Confirmation({ booking, onNewBooking, paymentMethod }) {
         <div className="summary-grid">
           <div>
             <div className="k">Route</div>
-            <div className="v">{booking.schedule.routeId.replace("-", " → ")}</div>
+            <div className="v">{(booking.schedule.routeId || "").replace(/-/g, " → ")}</div>
           </div>
           <div>
             <div className="k">Travel date</div>

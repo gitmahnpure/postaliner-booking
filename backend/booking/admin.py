@@ -24,9 +24,18 @@ class BookingAdmin(admin.ModelAdmin):
     list_display = ["reference", "schedule", "travel_date", "customer_name", "seats", "total_fare", "created_at"]
     list_filter = ["schedule__route", "travel_date"]
     search_fields = ["reference", "customer_name", "customer_phone"]
+    readonly_fields = ["reference", "seats", "total_fare", "created_at"]
+    list_select_related = ["schedule__route", "pickup", "dropoff"]
+    date_hierarchy = "travel_date"
+    raw_id_fields = ["schedule", "user"]
 
 
 @admin.register(SeatHold)
 class SeatHoldAdmin(admin.ModelAdmin):
     list_display = ["id", "schedule", "travel_date", "seats", "session_key", "created_at", "expires_at"]
     list_filter = ["schedule__route", "travel_date"]
+    search_fields = ["session_key"]
+    readonly_fields = ["seats", "created_at", "expires_at"]
+    list_select_related = ["schedule__route"]
+    date_hierarchy = "travel_date"
+    raw_id_fields = ["schedule"]

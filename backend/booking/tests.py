@@ -21,10 +21,10 @@ class SeedDataMixin:
                 slug=slug,
                 defaults={"origin_id": origin, "destination_id": destination, "label": label},
             )
-        for route_slug, time_str, coach, fare in SCHEDULES:
+        for route_slug, dep_time, coach, fare in SCHEDULES:
             Schedule.objects.update_or_create(
                 route_id=route_slug,
-                departure_time=time_str,
+                departure_time=dep_time,
                 coach=coach,
                 defaults={"total_seats": 44, "fare": fare},
             )
@@ -121,7 +121,7 @@ class CreateBookingTest(SeedDataMixin, TestCase):
         resp = self.client.post("/api/bookings/", payload, format="json")
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
         data = resp.json()
-        self.assertEqual(data["total_fare"], self.schedule.fare * 2)
+        self.assertEqual(data["totalFare"], self.schedule.fare * 2)
 
     def test_create_booking_seat_clash(self):
         Booking.objects.create(

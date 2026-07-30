@@ -1,12 +1,14 @@
 from datetime import date as date_cls
 
+from django.db import transaction
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 
 from .models import Booking, Location, Route, Schedule, SeatHold
 from .serializers import (
@@ -73,17 +75,22 @@ def seat_map_view(request, schedule_id):
 
 
 class BookingList(ListAPIView):
-    queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     pagination_class = StandardPagination
 
     def get_queryset(self):
-        qs = Booking.objects.all()
-        if self.request.user.is_authenticated:
-            qs = qs.filter(user=self.request.user)
-        return qs
+        if not self.request.user.is_authenticated:
+            return Booking.objects.none()
+        return Booking.objects.filter(user=self.request.user).select_related(
+            "schedule__route", "pickup", "dropoff"
+        )
 
+    @transaction.atomic
     def post(self, request, *args, **kwargs):
+        schedule_id = request.data.get("scheduleId")
+        if schedule_id:
+            Schedule.objects.select_for_update().filter(pk=schedule_id).first()
+
         context = {"session_key": request.session.session_key or ""}
         if request.user.is_authenticated:
             context["user"] = request.user
@@ -97,23 +104,36 @@ class BookingList(ListAPIView):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def my_bookings_view(request):
-    bookings = Booking.objects.filter(user=request.user)
+    bookings = Booking.objects.filter(user=request.user).select_related(
+        "schedule__route", "pickup", "dropoff"
+    )
     return Response(BookingSerializer(bookings, many=True).data)
 
 
 @api_view(["GET"])
 def booking_detail_view(request, reference):
-    booking = get_object_or_404(Booking, reference=reference)
+    booking = get_object_or_404(
+        Booking.objects.select_related("schedule__route", "pickup", "dropoff"),
+        reference=reference,
+    )
+    if not request.user.is_authenticated or booking.user != request.user:
+        return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
     return Response(BookingSerializer(booking).data)
 
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
+@throttle_classes([AnonRateThrottle])
 def create_hold_view(request):
     session_key = request.session.session_key
     if not session_key:
         request.session.save()
         session_key = request.session.session_key
+
+    schedule_id = request.data.get("scheduleId")
+    if schedule_id:
+        Schedule.objects.select_for_update().filter(pk=schedule_id).first()
+
     context = {"session_key": session_key}
     serializer = SeatHoldSerializer(data=request.data, context=context)
     if serializer.is_valid():

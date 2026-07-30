@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from .models import Booking, Location, Route, Schedule, SeatHold
+from .validation import validate_seats_available, validate_seats_list, validate_seat_bounds
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -24,7 +25,7 @@ class RouteSerializer(serializers.ModelSerializer):
 
 class ScheduleSerializer(serializers.ModelSerializer):
     routeId = serializers.CharField(source="route_id")
-    departureTime = serializers.CharField(source="departure_time")
+    departureTime = serializers.TimeField(source="departure_time", format="%H:%M")
     totalSeats = serializers.IntegerField(source="total_seats")
 
     class Meta:
@@ -64,41 +65,14 @@ class BookingCreateSerializer(serializers.ModelSerializer):
         ]
 
     def validate_seats(self, value):
-        if not value or not isinstance(value, list):
-            raise serializers.ValidationError("Select at least one seat.")
-        if len(set(value)) != len(value):
-            raise serializers.ValidationError("Duplicate seats selected.")
-        return value
+        return validate_seats_list(value)
 
     def validate(self, attrs):
         schedule = attrs["schedule"]
         travel_date = attrs["travel_date"]
         seats = attrs["seats"]
-
-        if max(seats) > schedule.total_seats or min(seats) < 1:
-            raise serializers.ValidationError("One or more seats do not exist on this coach.")
-
-        already_booked = set(
-            s for seats_list in schedule.bookings.filter(travel_date=travel_date).values_list("seats", flat=True)
-            for s in seats_list
-        )
-        clashing = already_booked.intersection(seats)
-        if clashing:
-            raise serializers.ValidationError(
-                {"seats": f"Seat(s) {sorted(clashing)} are already booked for this trip and date."}
-            )
-
-        session_key = self.context.get("session_key", "")
-        active_holds = SeatHold.active_holds_for(schedule, travel_date)
-        for hold in active_holds:
-            if hold.session_key == session_key:
-                continue
-            hold_seats = set(hold.seats)
-            clashing = hold_seats.intersection(seats)
-            if clashing:
-                raise serializers.ValidationError(
-                    {"seats": f"Seat(s) {sorted(clashing)} are currently on hold for this trip."}
-                )
+        validate_seat_bounds(seats, schedule.total_seats)
+        validate_seats_available(schedule, travel_date, seats, self.context.get("session_key", ""))
         return attrs
 
     def create(self, validated_data):
@@ -134,22 +108,29 @@ class BookingSerializer(serializers.ModelSerializer):
     schedule = ScheduleSerializer()
     pickup = LocationSerializer()
     dropoff = LocationSerializer()
+    travelDate = serializers.DateField(source="travel_date")
+    customerName = serializers.CharField(source="customer_name")
+    customerPhone = serializers.CharField(source="customer_phone")
+    customerIdNumber = serializers.CharField(source="customer_id_number")
+    customerEmail = serializers.EmailField(source="customer_email")
+    totalFare = serializers.IntegerField(source="total_fare")
+    createdAt = serializers.DateTimeField(source="created_at")
 
     class Meta:
         model = Booking
         fields = [
             "reference",
             "schedule",
-            "travel_date",
+            "travelDate",
             "pickup",
             "dropoff",
             "seats",
-            "customer_name",
-            "customer_phone",
-            "customer_id_number",
-            "customer_email",
-            "total_fare",
-            "created_at",
+            "customerName",
+            "customerPhone",
+            "customerIdNumber",
+            "customerEmail",
+            "totalFare",
+            "createdAt",
         ]
 
 
@@ -163,39 +144,12 @@ class SeatHoldSerializer(serializers.ModelSerializer):
         read_only_fields = ["id", "session_key", "expires_at", "created_at"]
 
     def validate_seats(self, value):
-        if not value or not isinstance(value, list):
-            raise serializers.ValidationError("Select at least one seat.")
-        if len(set(value)) != len(value):
-            raise serializers.ValidationError("Duplicate seats selected.")
-        return value
+        return validate_seats_list(value)
 
     def validate(self, attrs):
         schedule = attrs["schedule"]
         travel_date = attrs["travel_date"]
         seats = attrs["seats"]
-
-        if max(seats) > schedule.total_seats or min(seats) < 1:
-            raise serializers.ValidationError("One or more seats do not exist on this coach.")
-
-        already_booked = set(
-            s for seats_list in schedule.bookings.filter(travel_date=travel_date).values_list("seats", flat=True)
-            for s in seats_list
-        )
-        clashing = already_booked.intersection(seats)
-        if clashing:
-            raise serializers.ValidationError(
-                {"seats": f"Seat(s) {sorted(clashing)} are already booked for this trip and date."}
-            )
-
-        session_key = self.context.get("session_key", "")
-        active_holds = SeatHold.active_holds_for(schedule, travel_date)
-        for hold in active_holds:
-            if hold.session_key == session_key:
-                continue
-            hold_seats = set(hold.seats)
-            clashing = hold_seats.intersection(seats)
-            if clashing:
-                raise serializers.ValidationError(
-                    {"seats": f"Seat(s) {sorted(clashing)} are currently on hold for this trip."}
-                )
+        validate_seat_bounds(seats, schedule.total_seats)
+        validate_seats_available(schedule, travel_date, seats, self.context.get("session_key", ""))
         return attrs

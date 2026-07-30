@@ -13,6 +13,7 @@ export default function PassengerForm({ customer, onChange }) {
           onChange={update("customerName")}
           placeholder="Jane Wanjiru"
           autoComplete="name"
+          required
         />
       </div>
       <div className="field">
@@ -21,9 +22,12 @@ export default function PassengerForm({ customer, onChange }) {
           id="customerPhone"
           value={customer.customerPhone}
           onChange={update("customerPhone")}
-          placeholder="07XX XXX XXX"
+          placeholder="0712 345 678"
           autoComplete="tel"
           inputMode="tel"
+          required
+          pattern="(\+254|0)[\s\-]?\d{2}[\s\-]?\d{3}[\s\-]?\d{4}"
+          title="Enter a valid Kenyan phone number, e.g. 0712 345 678 or +254712345678"
         />
       </div>
       <div className="field">
@@ -33,6 +37,8 @@ export default function PassengerForm({ customer, onChange }) {
           value={customer.customerIdNumber}
           onChange={update("customerIdNumber")}
           placeholder="National ID"
+          required
+          minLength={6}
         />
       </div>
       <div className="field">
