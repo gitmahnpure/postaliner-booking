@@ -1,9 +1,10 @@
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8001/api";
 
 async function request(path, options = {}) {
+  const { headers: extraHeaders, ...rest } = options;
   const res = await fetch(`${BASE_URL}${path}`, {
-    headers: { "Content-Type": "application/json" },
-    ...options,
+    headers: { "Content-Type": "application/json", ...extraHeaders },
+    ...rest,
   });
 
   let body = null;
@@ -28,6 +29,10 @@ function flattenErrors(errors) {
     .join(" ");
 }
 
+function withAuth(token) {
+  return token ? { headers: { Authorization: `Token ${token}` } } : {};
+}
+
 export const api = {
   getLocations: () => request("/locations/"),
   getRoutes: () => request("/routes/"),
@@ -36,4 +41,18 @@ export const api = {
   createBooking: (payload) =>
     request("/bookings/", { method: "POST", body: JSON.stringify(payload) }),
   getBooking: (reference) => request(`/bookings/${reference}/`),
+
+  login: (username, password) =>
+    request("/auth/login/", { method: "POST", body: JSON.stringify({ username, password }) }),
+  register: (payload) =>
+    request("/auth/register/", { method: "POST", body: JSON.stringify(payload) }),
+  getMe: (token) => request("/auth/me/", withAuth(token)),
+
+  createHold: (scheduleId, date, seats, token) =>
+    request("/holds/", { method: "POST", body: JSON.stringify({ schedule: scheduleId, travel_date: date, seats }), ...withAuth(token) }),
+  releaseHold: (holdId, token) =>
+    request(`/holds/${holdId}/`, { method: "DELETE", ...withAuth(token) }),
+
+  getMyBookings: (token) => request("/bookings/my/", withAuth(token)),
 };
+

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Posta Kenya — Book Ticket</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .step { display: none; }
+    .step.active { display: block; }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-badge">PK</div>
+        <div class="logo-text">
+          <span class="brand">POSTA <span>KENYA</span></span>
+          <span class="tagline">Touching lives</span>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="book.html" class="active">Book ticket</a>
+        <a href="history.html">My bookings</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="help.html">Help &amp; support</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-ghost">Login</a>
+        <a href="register.html" class="btn btn-solid">Register</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="page" id="app">
+    <div class="booking-breadcrumb">
+      <span class="crumb active" data-step="1">1. Choose trip</span>
+      <span class="crumb-sep">/</span>
+      <span class="crumb" data-step="2">2. Pick seats</span>
+      <span class="crumb-sep">/</span>
+      <span class="crumb" data-step="3">3. Details</span>
+    </div>
+
+    <!-- Step 1: Schedule -->
+    <div class="step active" data-step="1">
+      <div style="margin-bottom:20px">
+        <h3 style="font-family:var(--font-display);font-size:20px;margin-bottom:4px">Nairobi → Mombasa</h3>
+        <p style="color:var(--slate);font-size:14px">Select a departure time</p>
+      </div>
+      <div class="trip-list">
+        <button type="button" class="trip-row" onclick="goStep(2, this)">
+          <span class="trip-check"></span>
+          <span><span class="trip-time">07:30</span><br /><span class="trip-coach">Coach A · 44 seats</span></span>
+          <span class="trip-fare">KES 1,500</span>
+        </button>
+        <button type="button" class="trip-row" onclick="goStep(2, this)">
+          <span class="trip-check"></span>
+          <span><span class="trip-time">09:15</span><br /><span class="trip-coach">Coach B · 44 seats</span></span>
+          <span class="trip-fare">KES 1,800</span>
+        </button>
+        <button type="button" class="trip-row" onclick="goStep(2, this)">
+          <span class="trip-check"></span>
+          <span><span class="trip-time">11:45</span><br /><span class="trip-coach">Coach C · 44 seats</span></span>
+          <span class="trip-fare">KES 1,500</span>
+        </button>
+        <button type="button" class="trip-row" onclick="goStep(2, this)">
+          <span class="trip-check"></span>
+          <span><span class="trip-time">14:00</span><br /><span class="trip-coach">Coach D · 44 seats</span></span>
+          <span class="trip-fare">KES 2,000</span>
+        </button>
+        <button type="button" class="trip-row" onclick="goStep(2, this)">
+          <span class="trip-check"></span>
+          <span><span class="trip-time">16:30</span><br /><span class="trip-coach">Coach E · 44 seats</span></span>
+          <span class="trip-fare">KES 1,500</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: Seat Map -->
+    <div class="step" data-step="2">
+      <div class="trip-meta">
+        <h3>Nairobi → Mombasa</h3>
+        <p>2026-08-15 · Coach A · KES 1,500</p>
+      </div>
+      <div class="bus">
+        <div class="bus-front"><span>Coach A</span><div class="wheel-icon"></div><span>Front</span></div>
+        <div class="seat-grid" role="group" aria-label="Seat map">
+          <button type="button" class="seat" onclick="toggleSeat(this)">1</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">2</button>
+          <div class="aisle-gap"></div>
+          <button type="button" class="seat" onclick="toggleSeat(this)">3</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">4</button>
+
+          <button type="button" class="seat" onclick="toggleSeat(this)">5</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">6</button>
+          <div class="aisle-gap"></div>
+          <button type="button" class="seat" onclick="toggleSeat(this)">7</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">8</button>
+
+          <button type="button" class="seat" onclick="toggleSeat(this)">9</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">10</button>
+          <div class="aisle-gap"></div>
+          <button type="button" class="seat" onclick="toggleSeat(this)">11</button>
+          <button type="button" class="seat">12</button>
+
+          <button type="button" class="seat" onclick="toggleSeat(this)">13</button>
+          <button type="button" class="seat">14</button>
+          <div class="aisle-gap"></div>
+          <button type="button" class="seat" onclick="toggleSeat(this)">15</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">16</button>
+
+          <button type="button" class="seat" onclick="toggleSeat(this)">17</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">18</button>
+          <div class="aisle-gap"></div>
+          <button type="button" class="seat">19</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">20</button>
+
+          <button type="button" class="seat" onclick="toggleSeat(this)">21</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">22</button>
+          <div class="aisle-gap"></div>
+          <button type="button" class="seat" onclick="toggleSeat(this)">23</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">24</button>
+
+          <button type="button" class="seat" onclick="toggleSeat(this)">25</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">26</button>
+          <div class="aisle-gap"></div>
+          <button type="button" class="seat" onclick="toggleSeat(this)">27</button>
+          <button type="button" class="seat">28</button>
+
+          <button type="button" class="seat" onclick="toggleSeat(this)">29</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">30</button>
+          <div class="aisle-gap"></div>
+          <button type="button" class="seat" onclick="toggleSeat(this)">31</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">32</button>
+
+          <button type="button" class="seat" onclick="toggleSeat(this)">33</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">34</button>
+          <div class="aisle-gap"></div>
+          <button type="button" class="seat">35</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">36</button>
+
+          <button type="button" class="seat" onclick="toggleSeat(this)">37</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">38</button>
+          <div class="aisle-gap"></div>
+          <button type="button" class="seat" onclick="toggleSeat(this)">39</button>
+          <button type="button" class="seat" onclick="toggleSeat(this)">40</button>
+        </div>
+      </div>
+      <div class="seat-legend">
+        <span><span class="dot available"></span>Available</span>
+        <span><span class="dot selected-dot"></span>Selected</span>
+        <span><span class="dot booked"></span>Booked</span>
+      </div>
+      <div class="step-actions">
+        <button type="button" class="btn btn-ghost" onclick="goStep(1)">Back</button>
+        <button type="button" class="btn btn-primary" onclick="goStep(3)" id="seatsContinue" disabled>
+          Continue (0 seats)
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 3: Passenger Details -->
+    <div class="step" data-step="3">
+      <div class="trip-meta">
+        <h3>Passenger details</h3>
+        <p>Nairobi → Mombasa · 2026-08-15 · Seats: <span id="selectedSeatsDisplay">—</span></p>
+      </div>
+      <form action="book.html" onsubmit="event.preventDefault();goStep(4);">
+        <div class="field-row">
+          <div class="field">
+            <label>Full name</label>
+            <input type="text" placeholder="Jane Wanjiru" required />
+          </div>
+          <div class="field">
+            <label>Phone number</label>
+            <input type="tel" placeholder="07XX XXX XXX" required />
+          </div>
+          <div class="field">
+            <label>ID number</label>
+            <input type="text" placeholder="National ID" required />
+          </div>
+          <div class="field">
+            <label>Email (optional)</label>
+            <input type="email" placeholder="jane@example.com" />
+          </div>
+        </div>
+        <div class="step-actions">
+          <button type="button" class="btn btn-ghost" onclick="goStep(2)">Back</button>
+          <button type="submit" class="btn btn-primary">Pay KES 3,000</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Step 4: Confirmation -->
+    <div class="step" data-step="4">
+      <div class="confirm-wrap">
+        <div class="confirm-badge">&#10003;</div>
+        <div class="success-banner">
+          <span class="success-icon">&#10003;</span>
+          <div>
+            <strong>Payment received &amp; booking confirmed!</strong>
+            <p>Your e-ticket has been issued. Save your reference code for boarding.</p>
+          </div>
+        </div>
+        <p class="eyebrow-text">E-ticket issued</p>
+        <h2>You're on the manifest, Jane</h2>
+        <div class="reference-code">PK-A3K9XQ2</div>
+        <div class="barcode" aria-hidden="true">
+          <span style="height:24px"></span><span style="height:36px"></span><span style="height:18px"></span>
+          <span style="height:42px"></span><span style="height:28px"></span><span style="height:14px"></span>
+          <span style="height:38px"></span><span style="height:22px"></span><span style="height:32px"></span>
+          <span style="height:16px"></span><span style="height:40px"></span><span style="height:26px"></span>
+          <span style="height:20px"></span><span style="height:34px"></span><span style="height:30px"></span>
+          <span style="height:12px"></span><span style="height:44px"></span><span style="height:18px"></span>
+          <span style="height:36px"></span><span style="height:24px"></span><span style="height:28px"></span>
+          <span style="height:14px"></span><span style="height:42px"></span><span style="height:20px"></span>
+        </div>
+        <div class="summary-section">
+          <h3 class="summary-title">Trip details</h3>
+          <div class="summary-grid">
+            <div><div class="k">Route</div><div class="v">Nairobi → Mombasa</div></div>
+            <div><div class="k">Travel date</div><div class="v">2026-08-15</div></div>
+            <div><div class="k">Departs</div><div class="v">07:30 · Coach A</div></div>
+            <div><div class="k">Pickup</div><div class="v">Nairobi</div></div>
+            <div><div class="k">Dropoff</div><div class="v">Mombasa</div></div>
+            <div><div class="k">Seats</div><div class="v" id="confSeats">1, 2</div></div>
+          </div>
+        </div>
+        <div class="summary-section">
+          <h3 class="summary-title">Payment summary</h3>
+          <div class="summary-grid">
+            <div><div class="k">Method</div><div class="v">M-Pesa</div></div>
+            <div><div class="k">Status</div><div class="v summary-paid">Paid</div></div>
+            <div><div class="k">Passenger</div><div class="v">Jane Wanjiru</div></div>
+            <div><div class="k">Phone</div><div class="v">0712 345 678</div></div>
+            <div><div class="k">ID number</div><div class="v">12345678</div></div>
+            <div><div class="k">Total paid</div><div class="v summary-total">KES 3,000</div></div>
+          </div>
+        </div>
+        <div class="btn-row" style="justify-content:center">
+          <button type="button" class="btn btn-ghost" onclick="window.print()">Print e-ticket</button>
+          <a href="book.html" class="btn btn-primary">Book another seat</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-head">
+          <div class="logo-badge">PK</div>
+          <div><div class="footer-brand-name">POSTA <span>KENYA</span></div></div>
+        </div>
+        <p>Connecting Kenya, one journey at a time. Safe, comfortable and reliable bus travel across 47 counties.</p>
+        <div class="foot-social"><a href="#" aria-label="Facebook">F</a><a href="#" aria-label="Twitter">T</a><a href="#" aria-label="Instagram">I</a></div>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About us</a><a href="#">Careers</a><a href="#">Newsroom</a><a href="#">Partners</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="help.html">Help center</a><a href="#">Refunds</a><a href="track.html">Track ticket</a><a href="terms.html">Terms of use</a>
+      </div>
+      <div class="footer-col">
+        <h4>Destinations</h4>
+        <a href="destinations.html">Nairobi</a><a href="destinations.html">Mombasa</a><a href="destinations.html">Kisumu</a><a href="destinations.html">Eldoret</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="contact.html">Posta House, Kenyatta Ave, Nairobi</a><a href="tel:0800220220">0800 220 220</a><a href="mailto:hello@postakenya.co.ke">hello@postakenya.co.ke</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Posta Kenya. All rights reserved.</span>
+      <div class="footer-legal"><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms</a><a href="#">Cookies</a></div>
+    </div>
+  </footer>
+
+  <script>
+    let selectedSeats = [];
+
+    function goStep(n, btn) {
+      if (btn) {
+        document.querySelectorAll('.trip-row').forEach(r => r.classList.remove('selected'));
+        btn.classList.add('selected');
+      }
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.querySelector('.step[data-step="' + n + '"]').classList.add('active');
+      document.querySelectorAll('.crumb').forEach(c => c.classList.remove('active'));
+      document.querySelector('.crumb[data-step="' + n + '"]').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleSeat(btn) {
+      if (btn.disabled) return;
+      btn.classList.toggle('selected');
+      const num = parseInt(btn.textContent);
+      if (btn.classList.contains('selected')) {
+        selectedSeats.push(num);
+      } else {
+        selectedSeats = selectedSeats.filter(s => s !== num);
+      }
+      const btn2 = document.getElementById('seatsContinue');
+      btn2.disabled = selectedSeats.length === 0;
+      btn2.textContent = 'Continue (' + selectedSeats.length + ' seat' + (selectedSeats.length !== 1 ? 's' : '') + ')';
+    }
+
+    function showBooking() {
+      document.getElementById('selectedSeatsDisplay').textContent = selectedSeats.length ? selectedSeats.join(', ') : '—';
+      document.getElementById('confSeats').textContent = selectedSeats.length ? selectedSeats.join(', ') : '—';
+    }
+    document.querySelector('.step[data-step="3"] form').addEventListener('submit', function() {
+      showBooking();
+    });
+  </script>
+</body>
+</html>

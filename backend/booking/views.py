@@ -2,36 +2,51 @@ from datetime import date as date_cls
 
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.generics import ListAPIView
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from .models import Booking, Location, Route, Schedule
+from .models import Booking, Location, Route, Schedule, SeatHold
 from .serializers import (
     BookingCreateSerializer,
     BookingSerializer,
     LocationSerializer,
     RouteSerializer,
     ScheduleSerializer,
+    SeatHoldSerializer,
 )
 
 
-@api_view(["GET"])
-def locations_view(request):
-    return Response(LocationSerializer(Location.objects.all(), many=True).data)
+class StandardPagination(PageNumberPagination):
+    page_size = 50
+    page_size_query_param = "page_size"
+    max_page_size = 200
 
 
-@api_view(["GET"])
-def routes_view(request):
-    return Response(RouteSerializer(Route.objects.all(), many=True).data)
+class LocationList(ListAPIView):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+    pagination_class = StandardPagination
 
 
-@api_view(["GET"])
-def schedules_view(request):
-    qs = Schedule.objects.select_related("route")
-    route_id = request.query_params.get("route")
-    if route_id:
-        qs = qs.filter(route_id=route_id)
-    return Response(ScheduleSerializer(qs, many=True).data)
+class RouteList(ListAPIView):
+    queryset = Route.objects.all()
+    serializer_class = RouteSerializer
+    pagination_class = StandardPagination
+
+
+class ScheduleList(ListAPIView):
+    serializer_class = ScheduleSerializer
+    pagination_class = StandardPagination
+
+    def get_queryset(self):
+        qs = Schedule.objects.select_related("route")
+        route_id = self.request.query_params.get("route")
+        if route_id:
+            qs = qs.filter(route_id=route_id)
+        return qs
 
 
 @api_view(["GET"])
@@ -57,16 +72,67 @@ def seat_map_view(request, schedule_id):
     )
 
 
-@api_view(["POST"])
-def create_booking_view(request):
-    serializer = BookingCreateSerializer(data=request.data)
-    if serializer.is_valid():
-        booking = serializer.save()
-        return Response(BookingSerializer(booking).data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class BookingList(ListAPIView):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+    pagination_class = StandardPagination
+
+    def get_queryset(self):
+        qs = Booking.objects.all()
+        if self.request.user.is_authenticated:
+            qs = qs.filter(user=self.request.user)
+        return qs
+
+    def post(self, request, *args, **kwargs):
+        context = {"session_key": request.session.session_key or ""}
+        if request.user.is_authenticated:
+            context["user"] = request.user
+        serializer = BookingCreateSerializer(data=request.data, context=context)
+        if serializer.is_valid():
+            booking = serializer.save(user=context.get("user"))
+            return Response(BookingSerializer(booking).data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def my_bookings_view(request):
+    bookings = Booking.objects.filter(user=request.user)
+    return Response(BookingSerializer(bookings, many=True).data)
 
 
 @api_view(["GET"])
 def booking_detail_view(request, reference):
     booking = get_object_or_404(Booking, reference=reference)
     return Response(BookingSerializer(booking).data)
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def create_hold_view(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.save()
+        session_key = request.session.session_key
+    context = {"session_key": session_key}
+    serializer = SeatHoldSerializer(data=request.data, context=context)
+    if serializer.is_valid():
+        hold = SeatHold.create_hold(
+            schedule=serializer.validated_data["schedule"],
+            travel_date=serializer.validated_data["travel_date"],
+            seats=serializer.validated_data["seats"],
+            session_key=session_key,
+        )
+        return Response(SeatHoldSerializer(hold).data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["DELETE"])
+@permission_classes([AllowAny])
+def release_hold_view(request, hold_id):
+    hold = get_object_or_404(SeatHold, pk=hold_id)
+    session_key = request.session.session_key
+    if hold.session_key != session_key:
+        return Response({"detail": "You do not own this hold."}, status=status.HTTP_403_FORBIDDEN)
+    hold.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)

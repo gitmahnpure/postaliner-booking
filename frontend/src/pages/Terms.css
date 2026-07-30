@@ -1,0 +1,7 @@
+@import "./Help.css";
+
+.terms-date {
+  font-style: italic;
+  color: var(--text-dim);
+  font-size: 14px;
+}

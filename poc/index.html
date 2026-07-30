@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Posta Kenya — Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-badge">PK</div>
+        <div class="logo-text">
+          <span class="brand">POSTA <span>KENYA</span></span>
+          <span class="tagline">Touching lives</span>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="book.html">Book ticket</a>
+        <a href="history.html">My bookings</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="help.html">Help &amp; support</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-ghost">Login</a>
+        <a href="register.html" class="btn btn-solid">Register</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="hero-eyebrow"><span class="dot"></span>Now serving 47 counties across Kenya</div>
+          <h1>Travel across Kenya<br /><span class="accent">with Posta Kenya</span></h1>
+          <p class="lead">Book your bus tickets easily and securely. Comfortable journeys connecting you to the people and places that matter.</p>
+          <div class="trust-row">
+            <div class="trust-item"><span class="trust-icon">&#x1F6E1;&#xFE0F;</span> Safe &amp; secure</div>
+            <div class="trust-item"><span class="trust-icon">&#x1F4BA;</span> Comfortable seats</div>
+            <div class="trust-item"><span class="trust-icon">&#x1F570;&#xFE0F;</span> On-time service</div>
+          </div>
+        </div>
+        <div class="route-visual" aria-hidden="true">
+          <svg viewBox="0 0 420 380" preserveAspectRatio="xMidYMid meet">
+            <defs><linearGradient id="rg" x1="0" y1="0" x2="420" y2="380"><stop offset="0" stopColor="#3D6FE0" /><stop offset="1" stopColor="#D32F2F" /></linearGradient></defs>
+            <path d="M60 60 C 180 60, 120 190, 220 190 S 340 320, 360 320" fill="none" stroke="url(#rg)" stroke-width="8" stroke-linecap="round" opacity=".22" />
+            <path d="M60 60 C 180 60, 120 190, 220 190 S 340 320, 360 320" fill="none" stroke="#3547a0" stroke-width="8" stroke-linecap="round" />
+            <g transform="translate(60,60)"><circle cx="0" cy="0" r="9" fill="rgba(61,111,224,.12)" /><circle cx="0" cy="0" r="7" fill="var(--red)" /><text x="16" y="-6" font-size="12" font-weight="700">Nairobi</text><text x="16" y="10" font-size="11" fill="var(--slate)">NBO · DEP 07:30</text></g>
+            <g transform="translate(220,190)"><circle cx="0" cy="0" r="6" fill="var(--red)" /><text x="12" y="4" font-size="11" fill="var(--slate)">Nakuru stop</text></g>
+            <g transform="translate(360,320)"><circle cx="0" cy="0" r="9" fill="rgba(61,111,224,.12)" /><circle cx="0" cy="0" r="7" fill="var(--red)" /><text x="-70" y="-6" font-size="12" font-weight="700">Mombasa</text><text x="-70" y="10" font-size="11" fill="var(--slate)">MSA · ARR 15:45</text></g>
+          </svg>
+        </div>
+      </div>
+      <div class="search-card">
+        <form class="search-form" action="book.html">
+          <div class="field">
+            <label>From</label>
+            <div class="input-wrap">
+              <span class="fi">&#x1F4CD;</span>
+              <input type="text" placeholder="Nairobi" list="locs" required />
+            </div>
+          </div>
+          <button type="button" class="swap-btn" aria-label="Swap">&#x21C4;</button>
+          <div class="field">
+            <label>To</label>
+            <div class="input-wrap">
+              <span class="fi">&#x1F4CD;</span>
+              <input type="text" placeholder="Mombasa" list="locs" required />
+            </div>
+          </div>
+          <div class="field">
+            <label>Journey date</label>
+            <div class="input-wrap">
+              <span class="fi">&#x1F4C5;</span>
+              <input type="date" required />
+            </div>
+          </div>
+          <button type="submit" class="search-btn">&#x1F50D; Search buses</button>
+        </form>
+        <datalist id="locs">
+          <option value="Nairobi" /><option value="Mombasa" /><option value="Kisumu" /><option value="Eldoret" />
+          <option value="Nakuru" /><option value="Busia" /><option value="Bumala" /><option value="Kangemi" />
+        </datalist>
+      </div>
+    </section>
+
+    <section class="stats-band">
+      <div class="container">
+        <div class="stats-inner">
+          <div class="stat"><div class="num">47</div><div class="label">Counties covered</div></div>
+          <div class="stat"><div class="num">120</div><div class="label">Daily departures</div></div>
+          <div class="stat"><div class="num">850k+</div><div class="label">Happy travelers</div></div>
+          <div class="stat"><div class="num">98%</div><div class="label">On-time arrivals</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow">Why ride with us</span>
+          <h2>Built for the Kenyan road, mile after mile</h2>
+          <p>Every fleet, route and support line is designed around one thing — getting you there safely, on time, in comfort.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="ficon">&#x1F6E1;&#xFE0F;</div>
+            <h3>Safe &amp; secure</h3>
+            <p>Your safety is our priority, backed by trusted travel standards and vetted drivers on every route.</p>
+          </article>
+          <article class="feature-card">
+            <div class="ficon">&#x1F4BA;</div>
+            <h3>Comfortable journeys</h3>
+            <p>Spacious reclining seats and modern coaches designed for a relaxed, restful ride.</p>
+          </article>
+          <article class="feature-card">
+            <div class="ficon">&#x23F1;&#xFE0F;</div>
+            <h3>On time, always</h3>
+            <p>We value your schedule and hold ourselves to strict, dependable departure times.</p>
+          </article>
+          <article class="feature-card">
+            <div class="ficon">&#x1F3A7;</div>
+            <h3>24/7 customer support</h3>
+            <p>Real people, ready to help with bookings, changes, or questions anytime, anywhere.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="routes" id="routes">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow">Popular routes</span>
+          <h2>Kenya's best-loved journeys</h2>
+          <p>From coastal sunrises to highland air — these are the routes travelers book again and again.</p>
+        </div>
+        <div class="route-list">
+          <div class="route-card">
+            <div class="route-top"><span class="route-code mono">RT-001 · DAILY</span><span class="route-badge">Most booked</span></div>
+            <div class="route-cities"><span>Nairobi</span><span class="route-line-mini"></span><span>Mombasa</span></div>
+            <div class="route-meta"><span>8h 15m</span><span>14 seats left</span></div>
+            <div class="route-foot"><div class="route-price">KES 1,500 <span>/seat</span></div><a href="book.html" class="route-cta">Book now</a></div>
+          </div>
+          <div class="route-card">
+            <div class="route-top"><span class="route-code mono">RT-014 · DAILY</span><span class="route-badge">Scenic</span></div>
+            <div class="route-cities"><span>Nairobi</span><span class="route-line-mini"></span><span>Kisumu</span></div>
+            <div class="route-meta"><span>6h 40m</span><span>22 seats left</span></div>
+            <div class="route-foot"><div class="route-price">KES 1,200 <span>/seat</span></div><a href="book.html" class="route-cta">Book now</a></div>
+          </div>
+          <div class="route-card">
+            <div class="route-top"><span class="route-code mono">RT-027 · DAILY</span><span class="route-badge">Express</span></div>
+            <div class="route-cities"><span>Nakuru</span><span class="route-line-mini"></span><span>Eldoret</span></div>
+            <div class="route-meta"><span>2h 50m</span><span>9 seats left</span></div>
+            <div class="route-foot"><div class="route-price">KES 800 <span>/seat</span></div><a href="book.html" class="route-cta">Book now</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow">How it works</span>
+          <h2>Book your seat in three steps</h2>
+          <p>No queues, no paperwork — just a smooth path from search to seat.</p>
+        </div>
+        <div class="step-row">
+          <div class="step"><div class="step-num">1</div><h3>Search your route</h3><p>Pick your departure, destination and travel date to see live buses.</p></div>
+          <div class="step"><div class="step-num">2</div><h3>Choose your seat</h3><p>Compare times and coaches, then pick the exact seat you want.</p></div>
+          <div class="step"><div class="step-num">3</div><h3>Pay &amp; travel</h3><p>Pay securely with M-Pesa or card and get your ticket instantly.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow">Traveler stories</span>
+          <h2>Trusted across the country</h2>
+          <p>Real reviews from riders who've made Posta Kenya part of their journey.</p>
+        </div>
+        <div class="t-grid">
+          <div class="t-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="quote">Booked my Nairobi to Mombasa ticket in under two minutes. The seat was exactly as shown and the bus left right on time.</p>
+            <div class="t-person"><div class="t-avatar" style="background:var(--red)">WM</div><div><div class="name">Wanjiru M.</div><div class="role">Nairobi → Mombasa</div></div></div>
+          </div>
+          <div class="t-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="quote">Support team helped me rebook after I missed my slot, no hassle at all. This is now my default way to travel upcountry.</p>
+            <div class="t-person"><div class="t-avatar" style="background:var(--blue)">OK</div><div><div class="name">Otieno K.</div><div class="role">Nairobi → Kisumu</div></div></div>
+          </div>
+          <div class="t-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="quote">Clean coaches, comfortable legroom and a driver who actually kept to the schedule. Couldn't ask for more on a long ride.</p>
+            <div class="t-person"><div class="t-avatar" style="background:var(--navy)">AN</div><div><div class="name">Amina N.</div><div class="role">Nakuru → Eldoret</div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="cta-band">
+        <div>
+          <h2>Your next journey is one search away</h2>
+          <p>Join thousands of travelers who book with Posta Kenya every day.</p>
+        </div>
+        <a href="book.html" class="btn-white">Book your ticket</a>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-head">
+          <div class="logo-badge">PK</div>
+          <div><div class="footer-brand-name">POSTA <span>KENYA</span></div></div>
+        </div>
+        <p>Connecting Kenya, one journey at a time. Safe, comfortable and reliable bus travel across 47 counties.</p>
+        <div class="foot-social"><a href="#" aria-label="Facebook">F</a><a href="#" aria-label="Twitter">T</a><a href="#" aria-label="Instagram">I</a></div>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About us</a><a href="#">Careers</a><a href="#">Newsroom</a><a href="#">Partners</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="help.html">Help center</a><a href="#">Refunds</a><a href="track.html">Track ticket</a><a href="terms.html">Terms of use</a>
+      </div>
+      <div class="footer-col">
+        <h4>Destinations</h4>
+        <a href="destinations.html">Nairobi</a><a href="destinations.html">Mombasa</a><a href="destinations.html">Kisumu</a><a href="destinations.html">Eldoret</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="contact.html">Posta House, Kenyatta Ave, Nairobi</a><a href="tel:0800220220">0800 220 220</a><a href="mailto:hello@postakenya.co.ke">hello@postakenya.co.ke</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Posta Kenya. All rights reserved.</span>
+      <div class="footer-legal"><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms</a><a href="#">Cookies</a></div>
+    </div>
+  </footer>
+</body>
+</html>

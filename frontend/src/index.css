@@ -21,6 +21,14 @@
   --font-display: 'Poppins', sans-serif;
   --font-ui: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+
+  --text: var(--ink);
+  --text-dim: var(--slate);
+  --surface: var(--white);
+  --surface-2: var(--bg);
+  --border: var(--line);
+  --accent: var(--red);
+  --accent-hover: var(--red-dark);
 }
 
 * {
