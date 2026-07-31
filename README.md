@@ -26,7 +26,10 @@ postliner-clone/
 
 ```bash
 cd backend
-python3 -m venv .venv && source .venv/bin/activate   # optional but recommended
+python3 -m venv .venv
+# To activate:
+#   Linux/macOS: source .venv/bin/activate
+#   PowerShell:  .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py seed_data      # loads demo locations, routes, schedules
